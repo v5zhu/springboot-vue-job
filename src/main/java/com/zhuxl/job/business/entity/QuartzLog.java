@@ -169,9 +169,9 @@ public class QuartzLog extends BaseEntity {
 
     private Long threadId;
 
-    private String threadName;
-
     private String threadGroup;
+
+    private String threadName;
 
     private Integer activeGroupCount;
 
