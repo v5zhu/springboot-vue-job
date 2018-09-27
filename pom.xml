@@ -10,7 +10,7 @@
         <version>2.0.4.RELEASE</version>
     </parent>
     <groupId>com.zhuxl</groupId>
-    <artifactId>springboot-vue-quartz</artifactId>
+    <artifactId>springboot-vue-job</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -127,7 +127,7 @@
 
 
     <build>
-        <finalName>springboot-vue-quartz</finalName>
+        <finalName>springboot-vue-job</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
