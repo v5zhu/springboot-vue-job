@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuxl.job.business.dao.ScheduleJobDao">
+    <resultMap id="BaseResultMap" type="com.zhuxl.job.business.entity.ScheduleJobDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="job_group" property="jobGroup" jdbcType="VARCHAR"/>
+        <result column="job_status" property="jobStatus" jdbcType="VARCHAR"/>
+        <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="bean_class" property="beanClass" jdbcType="VARCHAR"/>
+        <result column="is_concurrent" property="isConcurrent" jdbcType="VARCHAR"/>
+        <result column="spring_id" property="springId" jdbcType="VARCHAR"/>
+        <result column="method_name" property="methodName" jdbcType="VARCHAR"/>
+        <result column="parameters" property="parameters" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+		id, gmt_create, gmt_modified, job_name, job_group, job_status,
+		cron_expression,
+		description, bean_class, is_concurrent, spring_id, method_name,parameters
+	</sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_b_schedule_job
+        where id = #{jobId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from t_b_schedule_job
+		where id = #{jobId,jdbcType=BIGINT}
+	</delete>
+    <insert id="insert" parameterType="com.zhuxl.job.business.entity.ScheduleJobDO">
+		insert into t_b_schedule_job (id, gmt_create, gmt_modified,
+		job_name, job_group, job_status,
+		cron_expression, description, bean_class,
+		is_concurrent, spring_id, method_name,parameters
+		)
+		values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP},
+		#{gmtModified,jdbcType=TIMESTAMP},
+		#{jobName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, #{jobStatus,jdbcType=VARCHAR},
+		#{cronExpression,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{beanClass,jdbcType=VARCHAR},
+		#{isConcurrent,jdbcType=VARCHAR}, #{springId,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, #{parameters,jdbcType=VARCHAR}
+		)
+	</insert>
+    <insert id="insertSelective" parameterType="com.zhuxl.job.business.entity.ScheduleJobDO">
+        insert into t_b_schedule_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="jobGroup != null">
+                job_group,
+            </if>
+            <if test="jobStatus != null">
+                job_status,
+            </if>
+            <if test="cronExpression != null">
+                cron_expression,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="beanClass != null">
+                bean_class,
+            </if>
+            <if test="isConcurrent != null">
+                is_concurrent,
+            </if>
+            <if test="springId != null">
+                spring_id,
+            </if>
+            <if test="methodName != null">
+                method_name,
+            </if>
+            <if test="parameters != null">
+                parameters
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jobName != null">
+                #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null">
+                #{jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="jobStatus != null">
+                #{jobStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="cronExpression != null">
+                #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="beanClass != null">
+                #{beanClass,jdbcType=VARCHAR},
+            </if>
+            <if test="isConcurrent != null">
+                #{isConcurrent,jdbcType=VARCHAR},
+            </if>
+            <if test="springId != null">
+                #{springId,jdbcType=VARCHAR},
+            </if>
+            <if test="methodName != null">
+                #{methodName,jdbcType=VARCHAR},
+            </if>
+            <if test="parameters != null">
+                #{parameters,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zhuxl.job.business.entity.ScheduleJobDO">
+        update t_b_schedule_job
+        <set>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null">
+                job_group = #{jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="jobStatus != null">
+                job_status = #{jobStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="cronExpression != null">
+                cron_expression = #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="beanClass != null">
+                bean_class = #{beanClass,jdbcType=VARCHAR},
+            </if>
+            <if test="isConcurrent != null">
+                is_concurrent = #{isConcurrent,jdbcType=VARCHAR},
+            </if>
+            <if test="springId != null">
+                spring_id = #{springId,jdbcType=VARCHAR},
+            </if>
+            <if test="methodName != null">
+                method_name = #{methodName,jdbcType=VARCHAR},
+            </if>
+            <if test="parameters != null">
+                parameters = #{parameters,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zhuxl.job.business.entity.ScheduleJobDO">
+		update t_b_schedule_job
+		set
+		gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+		job_name = #{jobName,jdbcType=VARCHAR},
+		job_group = #{jobGroup,jdbcType=VARCHAR},
+		job_status = #{jobStatus,jdbcType=VARCHAR},
+		cron_expression = #{cronExpression,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR},
+		bean_class = #{beanClass,jdbcType=VARCHAR},
+		is_concurrent = #{isConcurrent,jdbcType=VARCHAR},
+		spring_id = #{springId,jdbcType=VARCHAR},
+		method_name = #{methodName,jdbcType=VARCHAR},
+		parameters = #{parameters,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_b_schedule_job
+    </select>
+    <select id="getTaskByContent" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_b_schedule_job
+        where job_name LIKE CONCAT('%',#{jobName,jdbcType=VARCHAR},'%')
+    </select>
+    <select id="selectByNameGroup" resultType="java.lang.Integer">
+        select count(1) from t_b_schedule_job
+        where job_name=#{jobName} and job_group=#{jobGroup}
+    </select>
+    <select id="selectByNameGroupExceptThis" resultType="java.lang.Integer">
+        select count(1) from t_b_schedule_job
+        where job_name=#{jobName} and job_group=#{jobGroup} and id!=#{id}
+    </select>
+</mapper>
