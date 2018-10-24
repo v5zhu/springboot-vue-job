@@ -14,7 +14,7 @@ public class SleepJob {
 
     public void sleep() {
         try {
-            long times=10000;
+            long times=5000;
             Thread.sleep(times);
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.mapper.BeanMapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,13 +57,12 @@ public class JobServiceImpl implements JobService {
      */
     @Override
     @Transactional
-    public void addTask(ScheduleJobDO jobDto) {
+    public void addTask(ScheduleJobDO job) {
         // 检查job名称和分组是否重复
-        int count = scheduleJobDao.selectByNameGroup(jobDto.getJobName(), jobDto.getJobGroup());
+        int count = scheduleJobDao.selectByNameGroup(job.getJobName(), job.getJobGroup());
         if (count > 0) {
             throw new RuntimeException("Job已存在,请检查名称和分组是否有重复");
         }
-        ScheduleJobDO job = BeanMapper.map(jobDto, ScheduleJobDO.class);
         job.setGmtCreate(new Date());
         job.setJobStatus("0");
         scheduleJobDao.insertSelective(job);
@@ -72,8 +70,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     @Transactional
-    public void editTask(ScheduleJobDO jobDto) {
-        ScheduleJobDO jobDO = BeanMapper.map(jobDto, ScheduleJobDO.class);
+    public void editTask(ScheduleJobDO jobDO) {
 
         int count = scheduleJobDao.selectByNameGroupExceptThis(jobDO.getId(), jobDO.getJobName(), jobDO.getJobGroup());
         if (count > 0) {
@@ -89,7 +86,7 @@ public class JobServiceImpl implements JobService {
      */
     @Override
     public ScheduleJobDO getTaskById(Long jobId) {
-        return BeanMapper.map(scheduleJobDao.selectByPrimaryKey(jobId), ScheduleJobDO.class);
+        return scheduleJobDao.selectByPrimaryKey(jobId);
     }
 
     @Override
@@ -113,7 +110,7 @@ public class JobServiceImpl implements JobService {
             job.setJobStatus(ScheduleJobDO.STATUS_NOT_RUNNING);
         } else if ("start".equals(cmd)) {
             job.setJobStatus(ScheduleJobDO.STATUS_RUNNING);
-            addJob(BeanMapper.map(job, ScheduleJobDO.class));
+            addJob(job);
         }
         scheduleJobDao.updateByPrimaryKeySelective(job);
     }
@@ -211,7 +208,7 @@ public class JobServiceImpl implements JobService {
                     jobList.add(job);
                 }
             }
-            return BeanMapper.mapList(jobList, ScheduleJobDO.class);
+            return jobList;
         } catch (SchedulerException e) {
             e.printStackTrace();
 
@@ -247,7 +244,7 @@ public class JobServiceImpl implements JobService {
                 }
                 jobList.add(job);
             }
-            return BeanMapper.mapList(jobList, ScheduleJobDO.class);
+            return jobList;
 
         } catch (SchedulerException e) {
             e.printStackTrace();

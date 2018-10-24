@@ -1,6 +1,5 @@
 package com.zhuxl.job.component.listener;
 
-import com.zhuxl.job.business.entity.QuartzLog;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -12,9 +11,6 @@ import org.quartz.JobListener;
 @Slf4j
 public class JobListenerImpl implements JobListener {
 
-    private static final String STATUS_TOBEEXE = "jobToBeExecuted";
-    private static final String STATUS_VETOED = "jobExecutionVetoed";
-    private static final String STATUS_FINISHED = "jobWasExecuted";
 
     @Override
     public String getName() {
@@ -25,24 +21,15 @@ public class JobListenerImpl implements JobListener {
     @Override
     public void jobToBeExecuted(JobExecutionContext jobExecutionContext) {
         //Scheduler 在 JobDetail 将要被执行时调用这个方法。
-        QuartzLog log = new QuartzLog(jobExecutionContext, null, STATUS_TOBEEXE);
-
-//        System.out.println(JSONObject.toJSONString(log));
     }
 
     @Override
     public void jobExecutionVetoed(JobExecutionContext jobExecutionContext) {
         //Scheduler 在 JobDetail 即将被执行，但又被 TriggerListener 否决了时调用这个方法。
-        QuartzLog log = new QuartzLog(jobExecutionContext, null, STATUS_VETOED);
-
-//        System.out.println(JSONObject.toJSONString(log));
     }
 
     @Override
     public void jobWasExecuted(JobExecutionContext jobExecutionContext, JobExecutionException e) {
         //Scheduler 在 JobDetail 被执行之后调用这个方法。
-        QuartzLog log = new QuartzLog(jobExecutionContext, e, STATUS_FINISHED);
-
-//        System.out.println(JSONObject.toJSONString(log));
     }
 }

@@ -22,6 +22,10 @@ public class ScheduleJobDO extends BaseEntity implements Serializable {
     public static final String CONCURRENT_IS = "1";
     public static final String CONCURRENT_NOT = "0";
 
+
+    @ApiModelProperty(name = "任务ID")
+    private Long id;
+
     @ApiModelProperty(name = "任务名称")
     private String jobName;
 

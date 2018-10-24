@@ -1,5 +1,6 @@
 package com.zhuxl.job.business.entity;
 
+import com.zhuxl.job.util.IDGenUtils;
 import com.zhuxl.job.util.SpringUtils;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -17,15 +18,10 @@ import java.util.Date;
 @Setter
 @ApiModel(value = "quartz框架运行日志", description = "记录job、调度日志")
 public class QuartzLog extends BaseEntity {
-    public static final String TYPE_OF_JOB_LISTENER = "JOB";
-    public static final String TYPE_OF_SCHEDULER_LISTENER = "SCHEDULER";
-    public static final String TYPE_OF_TRIGGER_LISTENER = "TRIGGER";
 
-    public static final int JOB_GROUP = 1;
-    public static final int TRIGGER_GROUP = 2;
-
-    private QuartzLog() {
+    public QuartzLog() {
         Date date = new Date();
+        this.setId(IDGenUtils.timeSeqId());
         this.setGmtCreate(date);
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
@@ -41,12 +37,11 @@ public class QuartzLog extends BaseEntity {
         this.setThreadGroup(t.getThreadGroup().getName());
         this.setActiveGroupCount(t.getThreadGroup().activeGroupCount());
         this.setActiveCount(t.getThreadGroup().activeCount());
+        this.setStatus("RUNNING");
     }
 
-    public QuartzLog(JobExecutionContext jobExecutionContext, JobExecutionException e, String status) {
+    public QuartzLog(JobExecutionContext jobExecutionContext, JobExecutionException e) {
         this();
-        this.setStatus(status);
-        this.setType(TYPE_OF_JOB_LISTENER);
         Trigger trigger = jobExecutionContext.getTrigger();
 
         ScheduleJobDO scheduleJob = (ScheduleJobDO) jobExecutionContext.getMergedJobDataMap().get("scheduleJob");
@@ -59,83 +54,19 @@ public class QuartzLog extends BaseEntity {
         this.setCronExpression(scheduleJob.getCronExpression());
         this.setJobGroup(trigger.getJobKey().getGroup());
         this.setJobName(trigger.getJobKey().getName());
-        this.setStartTime(trigger.getStartTime());
-        this.setEndTime(trigger.getEndTime());
         this.setMisfireInstruction(trigger.getMisfireInstruction());
         this.setPriority(trigger.getPriority());
 
+        this.setStartTime(trigger.getFireTimeAfter(trigger.getPreviousFireTime()));
+        this.setEndTime(null);
         this.setRunTime(jobExecutionContext.getJobRunTime());
-        this.setPrevFireTime(jobExecutionContext.getPreviousFireTime());
-        this.setNextFireTime(jobExecutionContext.getNextFireTime());
+        this.setPrevFireTime(trigger.getPreviousFireTime());
+        this.setNextFireTime(trigger.getNextFireTime());
 
         this.setException(e != null ? e.getMessage() : null);
     }
 
-    public QuartzLog(Trigger trigger, SchedulerException e, String status) {
-        this();
-        this.setStatus(status);
-        this.setType(TYPE_OF_TRIGGER_LISTENER);
-
-        this.setTriggerGroup(trigger.getKey().getGroup());
-        this.setTriggerName(trigger.getKey().getName());
-
-        this.setJobGroup(trigger.getJobKey().getGroup());
-        this.setJobName(trigger.getJobKey().getName());
-        this.setStartTime(trigger.getStartTime());
-        this.setEndTime(trigger.getEndTime());
-        this.setMisfireInstruction(trigger.getMisfireInstruction());
-        this.setPriority(trigger.getPriority());
-
-        this.setException(e != null ? e.getMessage() : null);
-    }
-
-    public QuartzLog(JobDetail jobDetail, SchedulerException e, String status) throws SchedulerException {
-        this();
-        this.setStatus(status);
-        this.setType(TYPE_OF_SCHEDULER_LISTENER);
-
-        Scheduler scheduler = SpringUtils.getBean("scheduler", Scheduler.class);
-        assert scheduler != null;
-        Trigger trigger = scheduler.getTriggersOfJob(jobDetail.getKey()).get(0);
-
-        this.setTriggerGroup(trigger.getKey().getGroup());
-        this.setTriggerName(trigger.getKey().getName());
-
-        this.setJobGroup(trigger.getJobKey().getGroup());
-        this.setJobName(trigger.getJobKey().getName());
-        this.setStartTime(trigger.getStartTime());
-        this.setEndTime(trigger.getEndTime());
-        this.setMisfireInstruction(trigger.getMisfireInstruction());
-        this.setPriority(trigger.getPriority());
-
-        this.setException(e != null ? e.getMessage() : null);
-    }
-
-    public QuartzLog(TriggerKey triggerKey, SchedulerException e, String status) throws SchedulerException {
-        this(SpringUtils.getBean("scheduler", Scheduler.class).getTrigger(triggerKey), e, status);
-    }
-
-    public QuartzLog(JobKey jobKey, SchedulerException e, String status) throws SchedulerException {
-        this(SpringUtils.getBean("scheduler", Scheduler.class).getJobDetail(jobKey), e, status);
-    }
-
-    public QuartzLog(String group, Integer type, SchedulerException e, String status) {
-        this();
-        this.setStatus(status);
-        this.setType(TYPE_OF_SCHEDULER_LISTENER);
-
-        if (type == JOB_GROUP) {
-            this.setJobGroup(group);
-        } else if (type == TRIGGER_GROUP) {
-            this.setTriggerGroup(group);
-        }  // do nothing
-
-
-        this.setException(e != null ? e.getMessage() : null);
-    }
-
-
-    private String type;
+    private String id;
 
     private String triggerGroup;
 

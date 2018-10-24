@@ -20,9 +20,6 @@ import java.util.Date;
 @ApiModel(value = "公共属性对象", description = "存储id,创建时间,修改时间")
 public class BaseEntity implements Serializable {
 
-    @ApiModelProperty(name = "主键ID", value = "唯一ID")
-    private Long id;
-
     @ApiModelProperty(name = "创建时间", value = "记录创建日期")
     private Date gmtCreate;
 

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuxl.job.business.dao.QuartzLogDao">
+    <resultMap id="BaseResultMap" type="com.zhuxl.job.business.entity.QuartzLog">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="trigger_group" jdbcType="VARCHAR" property="triggerGroup"/>
+        <result column="trigger_name" jdbcType="VARCHAR" property="triggerName"/>
+        <result column="job_class" jdbcType="VARCHAR" property="jobClass"/>
+        <result column="job_group" jdbcType="VARCHAR" property="jobGroup"/>
+        <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
+        <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="misfire_instruction" jdbcType="INTEGER" property="misfireInstruction"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="run_time" jdbcType="BIGINT" property="runTime"/>
+        <result column="prev_fire_time" jdbcType="TIMESTAMP" property="prevFireTime"/>
+        <result column="next_fire_time" jdbcType="TIMESTAMP" property="nextFireTime"/>
+        <result column="priority" jdbcType="INTEGER" property="priority"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="host" jdbcType="VARCHAR" property="host"/>
+        <result column="hostname" jdbcType="VARCHAR" property="hostname"/>
+        <result column="thread_id" jdbcType="BIGINT" property="threadId"/>
+        <result column="thread_group" jdbcType="VARCHAR" property="threadGroup"/>
+        <result column="thread_name" jdbcType="VARCHAR" property="threadName"/>
+        <result column="active_group_count" jdbcType="INTEGER" property="activeGroupCount"/>
+        <result column="active_count" jdbcType="INTEGER" property="activeCount"/>
+        <result column="exception" jdbcType="VARCHAR" property="exception"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, trigger_group, trigger_name, job_class, job_group, job_name, cron_expression,
+    status, misfire_instruction, start_time, end_time, run_time, prev_fire_time, next_fire_time, 
+    priority, gmt_create, gmt_modified, host, hostname, thread_id, thread_group, thread_name, 
+    active_group_count, active_count, exception
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from quartz_log
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from quartz_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.zhuxl.job.business.entity.QuartzLog">
+    insert into quartz_log (id, trigger_group,
+      trigger_name, job_class, job_group, 
+      job_name, cron_expression, status, 
+      misfire_instruction, start_time, end_time, 
+      run_time, prev_fire_time, next_fire_time, 
+      priority, gmt_create, gmt_modified, 
+      host, hostname, thread_id, 
+      thread_group, thread_name, active_group_count, 
+      active_count, exception)
+    values (#{id,jdbcType=VARCHAR}, #{triggerGroup,jdbcType=VARCHAR},
+      #{triggerName,jdbcType=VARCHAR}, #{jobClass,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, 
+      #{jobName,jdbcType=VARCHAR}, #{cronExpression,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{misfireInstruction,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{runTime,jdbcType=BIGINT}, #{prevFireTime,jdbcType=TIMESTAMP}, #{nextFireTime,jdbcType=TIMESTAMP}, 
+      #{priority,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{host,jdbcType=VARCHAR}, #{hostname,jdbcType=VARCHAR}, #{threadId,jdbcType=BIGINT}, 
+      #{threadGroup,jdbcType=VARCHAR}, #{threadName,jdbcType=VARCHAR}, #{activeGroupCount,jdbcType=INTEGER}, 
+      #{activeCount,jdbcType=INTEGER}, #{exception,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zhuxl.job.business.entity.QuartzLog">
+        insert into quartz_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="triggerGroup != null">
+                trigger_group,
+            </if>
+            <if test="triggerName != null">
+                trigger_name,
+            </if>
+            <if test="jobClass != null">
+                job_class,
+            </if>
+            <if test="jobGroup != null">
+                job_group,
+            </if>
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="cronExpression != null">
+                cron_expression,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="misfireInstruction != null">
+                misfire_instruction,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="runTime != null">
+                run_time,
+            </if>
+            <if test="prevFireTime != null">
+                prev_fire_time,
+            </if>
+            <if test="nextFireTime != null">
+                next_fire_time,
+            </if>
+            <if test="priority != null">
+                priority,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="host != null">
+                host,
+            </if>
+            <if test="hostname != null">
+                hostname,
+            </if>
+            <if test="threadId != null">
+                thread_id,
+            </if>
+            <if test="threadGroup != null">
+                thread_group,
+            </if>
+            <if test="threadName != null">
+                thread_name,
+            </if>
+            <if test="activeGroupCount != null">
+                active_group_count,
+            </if>
+            <if test="activeCount != null">
+                active_count,
+            </if>
+            <if test="exception != null">
+                exception,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="triggerGroup != null">
+                #{triggerGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="triggerName != null">
+                #{triggerName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobClass != null">
+                #{jobClass,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null">
+                #{jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="jobName != null">
+                #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="cronExpression != null">
+                #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="misfireInstruction != null">
+                #{misfireInstruction,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="runTime != null">
+                #{runTime,jdbcType=BIGINT},
+            </if>
+            <if test="prevFireTime != null">
+                #{prevFireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nextFireTime != null">
+                #{nextFireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="priority != null">
+                #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="host != null">
+                #{host,jdbcType=VARCHAR},
+            </if>
+            <if test="hostname != null">
+                #{hostname,jdbcType=VARCHAR},
+            </if>
+            <if test="threadId != null">
+                #{threadId,jdbcType=BIGINT},
+            </if>
+            <if test="threadGroup != null">
+                #{threadGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="threadName != null">
+                #{threadName,jdbcType=VARCHAR},
+            </if>
+            <if test="activeGroupCount != null">
+                #{activeGroupCount,jdbcType=INTEGER},
+            </if>
+            <if test="activeCount != null">
+                #{activeCount,jdbcType=INTEGER},
+            </if>
+            <if test="exception != null">
+                #{exception,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zhuxl.job.business.entity.QuartzLog">
+        update quartz_log
+        <set>
+            <if test="triggerGroup != null">
+                trigger_group = #{triggerGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="triggerName != null">
+                trigger_name = #{triggerName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobClass != null">
+                job_class = #{jobClass,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null">
+                job_group = #{jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="cronExpression != null">
+                cron_expression = #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="misfireInstruction != null">
+                misfire_instruction = #{misfireInstruction,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="runTime != null">
+                run_time = #{runTime,jdbcType=BIGINT},
+            </if>
+            <if test="prevFireTime != null">
+                prev_fire_time = #{prevFireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nextFireTime != null">
+                next_fire_time = #{nextFireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="priority != null">
+                priority = #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="host != null">
+                host = #{host,jdbcType=VARCHAR},
+            </if>
+            <if test="hostname != null">
+                hostname = #{hostname,jdbcType=VARCHAR},
+            </if>
+            <if test="threadId != null">
+                thread_id = #{threadId,jdbcType=BIGINT},
+            </if>
+            <if test="threadGroup != null">
+                thread_group = #{threadGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="threadName != null">
+                thread_name = #{threadName,jdbcType=VARCHAR},
+            </if>
+            <if test="activeGroupCount != null">
+                active_group_count = #{activeGroupCount,jdbcType=INTEGER},
+            </if>
+            <if test="activeCount != null">
+                active_count = #{activeCount,jdbcType=INTEGER},
+            </if>
+            <if test="exception != null">
+                exception = #{exception,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>
