@@ -13,6 +13,21 @@ spring:
       initial-size: 20
       min-idle: 20
       max-active: 50
+  redis:
+    cluster:
+      nodes:
+        - 47.96.28.236:7000
+        - 47.96.28.236:7001
+        - 47.96.28.236:7002
+      max-redirects: 1000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 6000ms
+        max-idle: 8
+        min-idle: 0
+      shutdown-timeout: 100ms
+    ssl: false
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
 #pagehelper
