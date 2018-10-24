@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * RedisHttpSessionConfiguration的配置文件 引入RedisHttpSessionConfiguration.class
  * maxInactiveIntervalInSeconds设置session在redis里的超时
+ * 该类使用与spring data redis 2.0版本以上的用法
  */
 @Configuration
 public class RedisClusterConfigFactory {
