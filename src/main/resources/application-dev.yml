@@ -1,7 +1,7 @@
 server:
   port: 9999
   servlet:
-    context-path: /job
+    context-path: /quartz
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -13,21 +13,15 @@ spring:
       initial-size: 20
       min-idle: 20
       max-active: 50
-  redis:
-    cluster:
-      nodes:
-        - 47.96.28.236:7000
-        - 47.96.28.236:7001
-        - 47.96.28.236:7002
-      max-redirects: 1000
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: 6000ms
-        max-idle: 8
-        min-idle: 0
-      shutdown-timeout: 100ms
-    ssl: false
+redis-cluster:
+  redis-nodes:
+    - host: 47.96.28.236
+      port: 7000
+    - host: 47.96.28.236
+      port: 7001
+    - host: 47.96.28.236
+      port: 7002
+  max-redirects: 1000
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
 #pagehelper
