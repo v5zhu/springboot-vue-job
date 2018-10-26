@@ -34,7 +34,15 @@ mybatis-sql-plugin:
   enable: true
   outer-log4j-control: false
   show-connection-info: false
-
+snowflake:
+  time-format: yyyyMMddHHmmss
+  start-time: 20180101000000
+  data-center-id: 1
+  worker-id: 12
+  bit:
+    data-center-id-bits: 5
+    worker-id-bits: 5
+    sequence-bits: 12
 quartz-cluster:
   scheduler:
     instance-name: springboot-vue-quartz
