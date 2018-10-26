@@ -26,6 +26,10 @@ public class RedisClusterConfigFactory {
     @Autowired
     private RedisConfiguration redisConfiguration;
 
+    public RedisClusterConfigFactory(){
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    }
+
 
     @Bean("jedisConnectionFactory")
     public JedisConnectionFactory jedisConnectionFactory() {
