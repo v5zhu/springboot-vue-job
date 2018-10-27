@@ -1,10 +1,14 @@
 package com.wim.quartz.business.entity;
 
-import com.wim.quartz.util.IDGenUtils;
+import com.wim.component.snowflake.SnowflakeIdWorker;
+import com.wim.quartz.util.SpringUtils;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
-import org.quartz.*;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.Trigger;
+import org.quartz.TriggerKey;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -20,7 +24,7 @@ public class QuartzLog extends BaseEntity {
 
     public QuartzLog() {
         Date date = new Date();
-        this.setId(IDGenUtils.timeSeqId());
+        this.setId(SpringUtils.getBean(SnowflakeIdWorker.class).nextId());
         this.setGmtCreate(date);
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
@@ -65,7 +69,7 @@ public class QuartzLog extends BaseEntity {
         this.setException(e != null ? e.getMessage() : null);
     }
 
-    private String id;
+    private Long id;
 
     private String triggerGroup;
 
