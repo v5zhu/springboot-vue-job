@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebInitParam;
 
 /**
  * @author zhuxiaolong
- * @project BDC_CS
+ * @project springboot-vue-quartz
  * @package com.wim.quartz.component.filter
  * @description
  * @time 2018/10/27 23:49
