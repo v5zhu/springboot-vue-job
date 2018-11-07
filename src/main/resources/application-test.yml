@@ -1,18 +1,27 @@
 server:
-  port: 9999
+  port: 8888
   servlet:
-    context-path: /job
+    context-path: /quartz
 spring:
   datasource:
-      type: com.alibaba.druid.pool.DruidDataSource
-      driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/sonnx-dev?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
-      username: root
-      password: v5zhu0911
-      tomcat:
-        initial-size: 20
-        min-idle: 20
-        max-active: 50
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.96.28.236:3306/sonnx-dev?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+    username: root
+    password: v5zhu0911
+    tomcat:
+      initial-size: 20
+      min-idle: 20
+      max-active: 50
+redis-cluster:
+  redis-nodes:
+  - host: 47.96.28.236
+    port: 7000
+  - host: 47.96.28.236
+    port: 7001
+  - host: 47.96.28.236
+    port: 7002
+  max-redirects: 1000
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
 #pagehelper
@@ -25,9 +34,17 @@ mybatis-sql-plugin:
   enable: true
   outer-log4j-control: false
   show-connection-info: false
-
+snowflake:
+  time-format: yyyyMMddHHmmss
+  start-time: 20180101000000
+  data-center-id: 1
+  worker-id: 12
+  bit:
+    data-center-id-bits: 5
+    worker-id-bits: 5
+    sequence-bits: 12
 quartz-cluster:
-  schduler:
+  scheduler:
     instance-name: springboot-vue-quartz
     instance-id: AUTO
     skip-update-check: true
