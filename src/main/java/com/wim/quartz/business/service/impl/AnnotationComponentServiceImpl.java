@@ -49,7 +49,7 @@ public class AnnotationComponentServiceImpl implements AnnotationComponentServic
             }
             return mapList;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return mapList;
     }
