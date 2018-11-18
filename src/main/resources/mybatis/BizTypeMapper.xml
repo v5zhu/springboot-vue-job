@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wim.quartz.business.dao.BizTypeMapper">
+    <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
+        <id column="biz_type" jdbcType="VARCHAR" property="bizType"/>
+        <result column="biz_type_code" jdbcType="VARCHAR" property="bizTypeCode"/>
+        <result column="biz_type_name" jdbcType="VARCHAR" property="bizTypeName"/>
+        <result column="data_type" jdbcType="INTEGER" property="dataType"/>
+        <result column="file_regex" jdbcType="VARCHAR" property="fileRegex"/>
+        <result column="lower_case" jdbcType="VARCHAR" property="lowerCase"/>
+        <result column="upper_case" jdbcType="VARCHAR" property="upperCase"/>
+        <result column="first_upper_other_camel" jdbcType="VARCHAR" property="firstUpperOtherCamel"/>
+        <result column="first_lower_other_camel" jdbcType="VARCHAR" property="firstLowerOtherCamel"/>
+        <result column="center_networks" jdbcType="VARCHAR" property="centerNetworks"/>
+        <result column="province_networks" jdbcType="VARCHAR" property="provinceNetworks"/>
+    </resultMap>
+    <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
+        <collection property="fieldList" column="biz_type" select="com.wim.quartz.business.dao.BizTypeFieldMapper.findByBizType"></collection>
+        <collection property="centerNetworkList" column="center_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>
+        <collection property="provinceNetworkList" column="province_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    biz_type, biz_type_code, biz_type_name, data_type, file_regex, lower_case, upper_case, 
+    first_upper_other_camel, first_lower_other_camel,center_networks,province_networks
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_biz_type
+        where biz_type = #{bizType,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAll" resultMap="AllResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_biz_type
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bdc_biz_type
+    where biz_type = #{bizType,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.wim.quartz.business.entity.BizType">
+    insert into bdc_biz_type (biz_type, biz_type_code, biz_type_name, 
+      data_type, file_regex, lower_case, 
+      upper_case, first_upper_other_camel, first_lower_other_camel,center_networks,province_networks
+      )
+    values (#{bizType,jdbcType=VARCHAR}, #{bizTypeCode,jdbcType=VARCHAR}, #{bizTypeName,jdbcType=VARCHAR}, 
+      #{dataType,jdbcType=INTEGER}, #{fileRegex,jdbcType=VARCHAR}, #{lowerCase,jdbcType=VARCHAR}, 
+      #{upperCase,jdbcType=VARCHAR}, #{firstUpperOtherCamel,jdbcType=VARCHAR}, #{firstLowerOtherCamel,jdbcType=VARCHAR},
+      #{center_networks,jdbcType=VARCHAR},#{province_networks,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.BizType">
+        insert into bdc_biz_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bizType != null">
+                biz_type,
+            </if>
+            <if test="bizTypeCode != null">
+                biz_type_code,
+            </if>
+            <if test="bizTypeName != null">
+                biz_type_name,
+            </if>
+            <if test="dataType != null">
+                data_type,
+            </if>
+            <if test="fileRegex != null">
+                file_regex,
+            </if>
+            <if test="lowerCase != null">
+                lower_case,
+            </if>
+            <if test="upperCase != null">
+                upper_case,
+            </if>
+            <if test="firstUpperOtherCamel != null">
+                first_upper_other_camel,
+            </if>
+            <if test="firstLowerOtherCamel != null">
+                first_lower_other_camel,
+            </if>
+            <if test="centerNetworks != null">
+                center_networks,
+            </if>
+            <if test="provinceNetworks != null">
+                province_networks,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bizType != null">
+                #{bizType,jdbcType=VARCHAR},
+            </if>
+            <if test="bizTypeCode != null">
+                #{bizTypeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bizTypeName != null">
+                #{bizTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="dataType != null">
+                #{dataType,jdbcType=INTEGER},
+            </if>
+            <if test="fileRegex != null">
+                #{fileRegex,jdbcType=VARCHAR},
+            </if>
+            <if test="lowerCase != null">
+                #{lowerCase,jdbcType=VARCHAR},
+            </if>
+            <if test="upperCase != null">
+                #{upperCase,jdbcType=VARCHAR},
+            </if>
+            <if test="firstUpperOtherCamel != null">
+                #{firstUpperOtherCamel,jdbcType=VARCHAR},
+            </if>
+            <if test="firstLowerOtherCamel != null">
+                #{firstLowerOtherCamel,jdbcType=VARCHAR},
+            </if>
+            <if test="centerNetworks != null">
+                #{centerNetworks,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceNetworks != null">
+                #{provinceNetworks,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.BizType">
+        update bdc_biz_type
+        <set>
+            <if test="bizTypeCode != null">
+                biz_type_code = #{bizTypeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bizTypeName != null">
+                biz_type_name = #{bizTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="dataType != null">
+                data_type = #{dataType,jdbcType=INTEGER},
+            </if>
+            <if test="fileRegex != null">
+                file_regex = #{fileRegex,jdbcType=VARCHAR},
+            </if>
+            <if test="lowerCase != null">
+                lower_case = #{lowerCase,jdbcType=VARCHAR},
+            </if>
+            <if test="upperCase != null">
+                upper_case = #{upperCase,jdbcType=VARCHAR},
+            </if>
+            <if test="firstUpperOtherCamel != null">
+                first_upper_other_camel = #{firstUpperOtherCamel,jdbcType=VARCHAR},
+            </if>
+            <if test="firstLowerOtherCamel != null">
+                first_lower_other_camel = #{firstLowerOtherCamel,jdbcType=VARCHAR},
+            </if>
+            <if test="centerNetworks != null">
+                center_networks = #{centerNetworks,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceNetworks != null">
+                province_networks = #{provinceNetworks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where biz_type = #{bizType,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizType">
+    update bdc_biz_type
+    set biz_type_code = #{bizTypeCode,jdbcType=VARCHAR},
+      biz_type_name = #{bizTypeName,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=INTEGER},
+      file_regex = #{fileRegex,jdbcType=VARCHAR},
+      lower_case = #{lowerCase,jdbcType=VARCHAR},
+      upper_case = #{upperCase,jdbcType=VARCHAR},
+      first_upper_other_camel = #{firstUpperOtherCamel,jdbcType=VARCHAR},
+      first_lower_other_camel = #{firstLowerOtherCamel,jdbcType=VARCHAR}
+      center_networks = #{centerNetworks,jdbcType=VARCHAR}
+      province_networks = #{provinceNetworks,jdbcType=VARCHAR}
+    where biz_type = #{bizType,jdbcType=VARCHAR}
+  </update>
+</mapper>
