@@ -13,11 +13,6 @@ import com.wim.quartz.component.annotation.AnnotationJob;
 public class SleepJob {
 
     public void sleep() {
-        try {
-            long times = 5000;
-            Thread.sleep(times);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        System.out.println("任务执行.................................................");
     }
 }

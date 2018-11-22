@@ -2,11 +2,11 @@ package com.wim.quartz.business.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wim.quartz.framework.quartz.QuartzJobFactory;
-import com.wim.quartz.framework.quartz.QuartzJobFactoryDisallowConcurrentExecution;
 import com.wim.quartz.business.dao.ScheduleJobDao;
 import com.wim.quartz.business.entity.ScheduleJobDO;
 import com.wim.quartz.business.service.JobService;
+import com.wim.quartz.framework.quartz.QuartzJobFactory;
+import com.wim.quartz.framework.quartz.QuartzJobFactoryDisallowConcurrentExecution;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
@@ -141,26 +141,30 @@ public class JobServiceImpl implements JobService {
         if (job == null || !ScheduleJobDO.STATUS_RUNNING.equals(job.getJobStatus())) {
             return;
         }
-        logger.debug(scheduler + ".......................................................................................add");
+        logger.debug(scheduler + "..................................................................................." +
+                "....add");
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
         try {
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 
             // 不存在，创建一个
             if (null == trigger) {
-                Class clazz = ScheduleJobDO.CONCURRENT_IS.equals(job.getIsConcurrent()) ? QuartzJobFactory.class : QuartzJobFactoryDisallowConcurrentExecution.class;
+                Class clazz = ScheduleJobDO.CONCURRENT_IS.equals(job.getIsConcurrent()) ? QuartzJobFactory.class :
+                        QuartzJobFactoryDisallowConcurrentExecution.class;
 
-                JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup()).build();
+                JobDetail jobDetail =
+                        JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup()).build();
 
                 jobDetail.getJobDataMap().put("scheduleJob", job);
 
-                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
 
-                trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup()).withSchedule(scheduleBuilder).build();
+                trigger =
+                        TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup()).withSchedule(scheduleBuilder).build();
                 scheduler.scheduleJob(jobDetail, trigger);
             } else {
                 // Trigger已存在，那么更新相应的定时设置
-                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
 
                 // 按新的cronExpression表达式重新构建trigger
                 trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
@@ -362,7 +366,8 @@ public class JobServiceImpl implements JobService {
         CronTrigger trigger = null;
         try {
             trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(ScheduleJobDO.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+            CronScheduleBuilder scheduleBuilder =
+                    CronScheduleBuilder.cronSchedule(ScheduleJobDO.getCronExpression()).withMisfireHandlingInstructionDoNothing();
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
@@ -386,7 +391,8 @@ public class JobServiceImpl implements JobService {
         CronTrigger trigger = null;
         try {
             trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing();
+            CronScheduleBuilder scheduleBuilder =
+                    CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing();
 
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
 
@@ -401,7 +407,8 @@ public class JobServiceImpl implements JobService {
     @Override
     public Boolean verifyCronExpression(String cronExpression) {
         try {
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing();
+            CronScheduleBuilder scheduleBuilder =
+                    CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing();
         } catch (Exception e) {
             logger.error("cron表达式有误，不能被解析！");
             return false;
