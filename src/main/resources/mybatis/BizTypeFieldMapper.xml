@@ -8,7 +8,7 @@
         <result column="mapped_field" jdbcType="VARCHAR" property="mappedField"/>
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizTypeField">
-        <collection property="fieldMappingList" column="biz_type,name"
+        <collection property="fieldMappingList"  column="{bizType=biz_type,fieldName=name}" ofType="map" javaType="java.util.ArrayList"
                     select="com.wim.quartz.business.dao.FieldMappingMapper.findByBizTypeAndFieldName">
         </collection>
     </resultMap>

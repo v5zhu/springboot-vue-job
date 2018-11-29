@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface FieldMappingMapper {
@@ -21,5 +22,5 @@ public interface FieldMappingMapper {
 
     int updateByPrimaryKey(FieldMapping record);
 
-    List<FieldMapping> findByBizTypeAndFieldName(@Param("bizType") String bizType, @Param("fieldName") String fieldName);
+    List<FieldMapping> findByBizTypeAndFieldName(@Param("params") Map params);
 }

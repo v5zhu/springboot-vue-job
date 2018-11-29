@@ -25,10 +25,10 @@ public class ApplicationRunnerInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         // 这里获取任务信息数据
-        List<ScheduleJobDO> jobList = jobService.queryAllJobs();
+       /* List<ScheduleJobDO> jobList = jobService.queryAllJobs();
 
         for (ScheduleJobDO job : jobList) {
             jobService.addJob(job);
-        }
+        }*/
     }
 }

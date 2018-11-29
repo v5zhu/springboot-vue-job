@@ -8,7 +8,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://47.96.28.236:3306/sonnx-dev?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
     username: root
-    password: v5zhu0911
+    password: zhuxiaolong13880298929
     tomcat:
       initial-size: 20
       min-idle: 20
@@ -69,7 +69,7 @@ quartz-cluster:
     driver: com.mysql.jdbc.Driver
     url: jdbc:mysql://47.96.28.236:3306/sonnx-dev?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
     user: root
-    password: v5zhu0911
+    password: zhuxiaolong13880298929
     max-connections: 50
   plugin:
     trigg-history-class: org.quartz.plugins.history.LoggingJobHistoryPlugin

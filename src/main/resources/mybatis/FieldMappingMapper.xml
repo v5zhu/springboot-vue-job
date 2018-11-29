@@ -82,7 +82,7 @@
   </update>
     <select id="findByBizTypeAndFieldName" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        *
         from bdc_biz_type_field_mapping
         where biz_type=#{bizType} and field=#{fieldName}
     </select>

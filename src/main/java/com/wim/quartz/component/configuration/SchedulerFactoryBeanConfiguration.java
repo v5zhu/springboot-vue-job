@@ -34,8 +34,8 @@ public class SchedulerFactoryBeanConfiguration {
     @Autowired
     private QuartzPluginConfiguration pluginConfiguration;
 
-    @Bean("schedulerFactoryBean")
-    @DependsOn("mybatisSqlInterceptor")
+//    @Bean("schedulerFactoryBean")
+//    @DependsOn("mybatisSqlInterceptor")
     public SchedulerFactoryBean schedulerFactoryBean() {
         SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
         factoryBean.setQuartzProperties(quartzProperties());
@@ -45,7 +45,7 @@ public class SchedulerFactoryBeanConfiguration {
         return factoryBean;
     }
 
-    @Bean("scheduler")
+//    @Bean("scheduler")
     public Scheduler getScheduler() {
         Scheduler scheduler = schedulerFactoryBean().getScheduler();
         try {

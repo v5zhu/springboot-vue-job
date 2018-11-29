@@ -11,17 +11,17 @@
         <result column="upper_case" jdbcType="VARCHAR" property="upperCase"/>
         <result column="first_upper_other_camel" jdbcType="VARCHAR" property="firstUpperOtherCamel"/>
         <result column="first_lower_other_camel" jdbcType="VARCHAR" property="firstLowerOtherCamel"/>
-        <result column="center_networks" jdbcType="VARCHAR" property="centerNetworks"/>
-        <result column="province_networks" jdbcType="VARCHAR" property="provinceNetworks"/>
+        <!--<result column="center_networks" jdbcType="VARCHAR" property="centerNetworks"/>-->
+        <!--<result column="province_networks" jdbcType="VARCHAR" property="provinceNetworks"/>-->
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
         <collection property="fieldList" column="biz_type" select="com.wim.quartz.business.dao.BizTypeFieldMapper.findByBizType"></collection>
-        <collection property="centerNetworkList" column="center_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>
-        <collection property="provinceNetworkList" column="province_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>
+        <!--<collection property="centerNetworkList" column="center_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>-->
+        <!--<collection property="provinceNetworkList" column="province_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>-->
     </resultMap>
     <sql id="Base_Column_List">
     biz_type, biz_type_code, biz_type_name, data_type, file_regex, lower_case, upper_case, 
-    first_upper_other_camel, first_lower_other_camel,center_networks,province_networks
+    first_upper_other_camel, first_lower_other_camel
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -41,12 +41,12 @@
     <insert id="insert" parameterType="com.wim.quartz.business.entity.BizType">
     insert into bdc_biz_type (biz_type, biz_type_code, biz_type_name, 
       data_type, file_regex, lower_case, 
-      upper_case, first_upper_other_camel, first_lower_other_camel,center_networks,province_networks
+      upper_case, first_upper_other_camel, first_lower_other_camel
       )
     values (#{bizType,jdbcType=VARCHAR}, #{bizTypeCode,jdbcType=VARCHAR}, #{bizTypeName,jdbcType=VARCHAR}, 
       #{dataType,jdbcType=INTEGER}, #{fileRegex,jdbcType=VARCHAR}, #{lowerCase,jdbcType=VARCHAR}, 
-      #{upperCase,jdbcType=VARCHAR}, #{firstUpperOtherCamel,jdbcType=VARCHAR}, #{firstLowerOtherCamel,jdbcType=VARCHAR},
-      #{center_networks,jdbcType=VARCHAR},#{province_networks,jdbcType=VARCHAR}
+      #{upperCase,jdbcType=VARCHAR}, #{firstUpperOtherCamel,jdbcType=VARCHAR}, #{firstLowerOtherCamel,jdbcType=VARCHAR}
+
       )
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.BizType">
@@ -79,12 +79,6 @@
             <if test="firstLowerOtherCamel != null">
                 first_lower_other_camel,
             </if>
-            <if test="centerNetworks != null">
-                center_networks,
-            </if>
-            <if test="provinceNetworks != null">
-                province_networks,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="bizType != null">
@@ -113,12 +107,6 @@
             </if>
             <if test="firstLowerOtherCamel != null">
                 #{firstLowerOtherCamel,jdbcType=VARCHAR},
-            </if>
-            <if test="centerNetworks != null">
-                #{centerNetworks,jdbcType=VARCHAR},
-            </if>
-            <if test="provinceNetworks != null">
-                #{provinceNetworks,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -149,12 +137,6 @@
             <if test="firstLowerOtherCamel != null">
                 first_lower_other_camel = #{firstLowerOtherCamel,jdbcType=VARCHAR},
             </if>
-            <if test="centerNetworks != null">
-                center_networks = #{centerNetworks,jdbcType=VARCHAR},
-            </if>
-            <if test="provinceNetworks != null">
-                province_networks = #{provinceNetworks,jdbcType=VARCHAR},
-            </if>
         </set>
         where biz_type = #{bizType,jdbcType=VARCHAR}
     </update>
@@ -168,8 +150,6 @@
       upper_case = #{upperCase,jdbcType=VARCHAR},
       first_upper_other_camel = #{firstUpperOtherCamel,jdbcType=VARCHAR},
       first_lower_other_camel = #{firstLowerOtherCamel,jdbcType=VARCHAR}
-      center_networks = #{centerNetworks,jdbcType=VARCHAR}
-      province_networks = #{provinceNetworks,jdbcType=VARCHAR}
     where biz_type = #{bizType,jdbcType=VARCHAR}
   </update>
 </mapper>
