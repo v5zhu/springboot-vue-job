@@ -2,14 +2,13 @@ package com.wim.quartz.business.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface AnnotationComponentService {
 
-    List<String> listBeanNames();
+    List<Map<String, String>> getClassList();
 
-    String getClassFullName(String beanId);
-
-    List<String> methods(String beanId);
+    List<Map<String, String>> methods(String beanId);
 
 }
