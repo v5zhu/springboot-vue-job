@@ -40,6 +40,7 @@ public class AnnotationComponentController extends BaseController {
     @ResponseBody
     public ResponseEntity listClassMethods(@RequestParam("beanId") String beanId) {
         List<String> names = annotationComponentService.methods(beanId);
+        System.out.println();
         return new ResponseEntity(names, HttpStatus.OK);
     }
 }
