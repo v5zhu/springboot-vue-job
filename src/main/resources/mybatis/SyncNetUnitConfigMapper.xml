@@ -7,20 +7,18 @@
         <result column="net_unit_name" jdbcType="VARCHAR" property="netUnitName"/>
         <result column="net_unit_ftp_name" jdbcType="VARCHAR" property="netUnitFtpName"/>
         <result column="file_format" jdbcType="VARCHAR" property="fileFormat"/>
-        <result column="biz_type_fields" jdbcType="VARCHAR" property="bizTypeFields"/>
-        <result column="file_fields" jdbcType="VARCHAR" property="fileFields"/>
+        <result column="sync_fields" jdbcType="VARCHAR" property="syncFields"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
+        <association property="netUnit"  column="net_unit_code" select="com.wim.quartz.business.dao.NetUnitMapper.findByNetUnitCode"/>
     </resultMap>
     <sql id="Base_Column_List">
-    biz_type, net_unit_code, net_unit_name, net_unit_ftp_name, file_format, biz_type_fields, file_fields, description
+    biz_type, net_unit_code, net_unit_name, net_unit_ftp_name, file_format, sync_fields, description
   </sql>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.SyncNetUnitConfig">
     insert into bdc_sync_net_unit_config (biz_type, net_unit_code, net_unit_name, 
-      net_unit_ftp_name, file_format, biz_type_fields, 
-      file_fields, description)
+      net_unit_ftp_name, file_format, sync_fields, description)
     values (#{bizType,jdbcType=VARCHAR}, #{netUnitCode,jdbcType=VARCHAR}, #{netUnitName,jdbcType=VARCHAR}, 
-      #{netUnitFtpName,jdbcType=VARCHAR}, #{fileFormat,jdbcType=VARCHAR}, #{bizTypeFields,jdbcType=VARCHAR}, 
-      #{fileFields,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+      #{netUnitFtpName,jdbcType=VARCHAR}, #{fileFormat,jdbcType=VARCHAR}, #{syncFields,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.SyncNetUnitConfig">
         insert into bdc_sync_net_unit_config
@@ -40,11 +38,8 @@
             <if test="fileFormat != null">
                 file_format,
             </if>
-            <if test="bizTypeFields != null">
-                biz_type_fields,
-            </if>
-            <if test="fileFields != null">
-                file_fields,
+            <if test="syncFields != null">
+                sync_fields,
             </if>
             <if test="description != null">
                 description,
@@ -66,8 +61,8 @@
             <if test="fileFormat != null">
                 #{fileFormat,jdbcType=VARCHAR},
             </if>
-            <if test="bizTypeFields != null">
-                #{bizTypeFields,jdbcType=VARCHAR},
+            <if test="syncFields != null">
+                #{syncFields,jdbcType=VARCHAR},
             </if>
             <if test="fileFields != null">
                 #{fileFields,jdbcType=VARCHAR},

@@ -17,6 +17,8 @@ public class NetUnit {
 
     private String netUnitName;
 
+    private Boolean center;
+
     private String ftpName;
 
     private String ftpDescription;

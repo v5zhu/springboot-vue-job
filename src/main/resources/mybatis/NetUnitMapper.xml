@@ -2,31 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wim.quartz.business.dao.NetUnitMapper">
     <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.NetUnit">
-        <id column="net_unit_code" jdbcType="VARCHAR" property="netUnitCode" />
-        <result column="net_unit_name" jdbcType="VARCHAR" property="netUnitName" />
-        <result column="ftp_name" jdbcType="VARCHAR" property="ftpName" />
-        <result column="ftp_description" jdbcType="VARCHAR" property="ftpDescription" />
-        <result column="host" jdbcType="VARCHAR" property="host" />
-        <result column="port" jdbcType="VARCHAR" property="port" />
-        <result column="username" jdbcType="VARCHAR" property="username" />
-        <result column="password" jdbcType="VARCHAR" property="password" />
-        <result column="localsenddir" jdbcType="VARCHAR" property="localsenddir" />
-        <result column="localsendtempdir" jdbcType="VARCHAR" property="localsendtempdir" />
-        <result column="remotesenddir" jdbcType="VARCHAR" property="remotesenddir" />
-        <result column="remotesendtempdir" jdbcType="VARCHAR" property="remotesendtempdir" />
-        <result column="localreceivedir" jdbcType="VARCHAR" property="localreceivedir" />
-        <result column="localreceivetempdir" jdbcType="VARCHAR" property="localreceivetempdir" />
-        <result column="remotereceivedir" jdbcType="VARCHAR" property="remotereceivedir" />
-        <result column="remotereceivetempdir" jdbcType="VARCHAR" property="remotereceivetempdir" />
+        <id column="net_unit_code" jdbcType="VARCHAR" property="netUnitCode"/>
+        <result column="net_unit_name" jdbcType="VARCHAR" property="netUnitName"/>
+        <result column="center" jdbcType="INTEGER" property="center"/>
+        <result column="ftp_name" jdbcType="VARCHAR" property="ftpName"/>
+        <result column="ftp_description" jdbcType="VARCHAR" property="ftpDescription"/>
+        <result column="host" jdbcType="VARCHAR" property="host"/>
+        <result column="port" jdbcType="VARCHAR" property="port"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="localsenddir" jdbcType="VARCHAR" property="localsenddir"/>
+        <result column="localsendtempdir" jdbcType="VARCHAR" property="localsendtempdir"/>
+        <result column="remotesenddir" jdbcType="VARCHAR" property="remotesenddir"/>
+        <result column="remotesendtempdir" jdbcType="VARCHAR" property="remotesendtempdir"/>
+        <result column="localreceivedir" jdbcType="VARCHAR" property="localreceivedir"/>
+        <result column="localreceivetempdir" jdbcType="VARCHAR" property="localreceivetempdir"/>
+        <result column="remotereceivedir" jdbcType="VARCHAR" property="remotereceivedir"/>
+        <result column="remotereceivetempdir" jdbcType="VARCHAR" property="remotereceivetempdir"/>
     </resultMap>
     <sql id="Base_Column_List">
-    net_unit_code, net_unit_name, ftp_name, ftp_desc, host, port, username, password,
+    net_unit_code, net_unit_name,center, ftp_name, ftp_description, host, port, username, password,
     localsenddir, localsendtempdir, remotesenddir, remotesendtempdir, localreceivedir,
     localreceivetempdir, remotereceivedir, remotereceivetempdir
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from bdc_net_unit
         where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
     </select>
@@ -35,14 +36,14 @@
     where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.NetUnit">
-    insert into bdc_net_unit (net_unit_code, net_unit_name, ftp_name,
-      ftp_desc, host, port,
+    insert into bdc_net_unit (net_unit_code, net_unit_name,center, ftp_name,
+      ftp_description, host, port,
       username, password, localsenddir,
       localsendtempdir, remotesenddir, remotesendtempdir,
       localreceivedir, localreceivetempdir, remotereceivedir,
       remotereceivetempdir)
-    values (#{netUnitCode,jdbcType=VARCHAR}, #{netUnitName,jdbcType=VARCHAR}, #{ftpName,jdbcType=VARCHAR},
-      #{ftpDesc,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR},
+    values (#{netUnitCode,jdbcType=VARCHAR}, #{netUnitName,jdbcType=VARCHAR},#{center,jdbcType=INTEGER}, #{ftpName,jdbcType=VARCHAR},
+      #{ftpDescription,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR},
       #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{localsenddir,jdbcType=VARCHAR},
       #{localsendtempdir,jdbcType=VARCHAR}, #{remotesenddir,jdbcType=VARCHAR}, #{remotesendtempdir,jdbcType=VARCHAR},
       #{localreceivedir,jdbcType=VARCHAR}, #{localreceivetempdir,jdbcType=VARCHAR}, #{remotereceivedir,jdbcType=VARCHAR},
@@ -57,11 +58,14 @@
             <if test="netUnitName != null">
                 net_unit_name,
             </if>
+            <if test="center != null">
+                center,
+            </if>
             <if test="ftpName != null">
                 ftp_name,
             </if>
-            <if test="ftpDesc != null">
-                ftp_desc,
+            <if test="ftpDescription != null">
+                ftp_description,
             </if>
             <if test="host != null">
                 host,
@@ -107,11 +111,14 @@
             <if test="netUnitName != null">
                 #{netUnitName,jdbcType=VARCHAR},
             </if>
+            <if test="center != null">
+                #{center,jdbcType=INTEGER},
+            </if>
             <if test="ftpName != null">
                 #{ftpName,jdbcType=VARCHAR},
             </if>
-            <if test="ftpDesc != null">
-                #{ftpDesc,jdbcType=VARCHAR},
+            <if test="ftpDescription != null">
+                #{ftpDescription,jdbcType=VARCHAR},
             </if>
             <if test="host != null">
                 #{host,jdbcType=VARCHAR},
@@ -157,11 +164,14 @@
             <if test="netUnitName != null">
                 net_unit_name = #{netUnitName,jdbcType=VARCHAR},
             </if>
+            <if test="center != null">
+                center = #{center,jdbcType=INTEGER},
+            </if>
             <if test="ftpName != null">
                 ftp_name = #{ftpName,jdbcType=VARCHAR},
             </if>
-            <if test="ftpDesc != null">
-                ftp_desc = #{ftpDesc,jdbcType=VARCHAR},
+            <if test="ftpDescription != null">
+                ftp_description = #{ftpDescription,jdbcType=VARCHAR},
             </if>
             <if test="host != null">
                 host = #{host,jdbcType=VARCHAR},
@@ -205,8 +215,9 @@
     <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.NetUnit">
     update bdc_net_unit
     set net_unit_name = #{netUnitName,jdbcType=VARCHAR},
+      center = #{center,jdbcType=INTEGER},
       ftp_name = #{ftpName,jdbcType=VARCHAR},
-      ftp_desc = #{ftpDesc,jdbcType=VARCHAR},
+      ftp_description = #{ftpDescription,jdbcType=VARCHAR},
       host = #{host,jdbcType=VARCHAR},
       port = #{port,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
@@ -221,10 +232,10 @@
       remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR}
     where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
   </update>
-    <select id="findByCodes" resultMap="BaseResultMap">
+
+    <select id="findByNetUnitCode" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from bdc_net_unit
-        where system_code in concat('(',#{codes},')')
+        from bdc_net_unit where net_unit_code=#{netUnitCode}
     </select>
 </mapper>

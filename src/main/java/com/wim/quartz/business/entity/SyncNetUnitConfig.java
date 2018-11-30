@@ -2,6 +2,11 @@ package com.wim.quartz.business.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author zhuxiaolong
@@ -24,9 +29,12 @@ public class SyncNetUnitConfig {
 
     private String fileFormat;
 
-    private String bizTypeFields;
-
-    private String fileFields;
+    private String syncFields;
 
     private String description;
+
+    // 关联对象
+
+    private NetUnit netUnit;
+
 }
