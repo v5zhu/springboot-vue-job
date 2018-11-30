@@ -19,5 +19,5 @@ public interface BizTypeFieldMapper {
 
     int updateByPrimaryKey(BizTypeField record);
 
-    List<BizTypeField> findByBizType(String bizType);
+    List<BizTypeField> findFieldListByBizType(String bizType);
 }

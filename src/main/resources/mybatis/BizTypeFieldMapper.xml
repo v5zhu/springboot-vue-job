@@ -3,17 +3,17 @@
 <mapper namespace="com.wim.quartz.business.dao.BizTypeFieldMapper">
     <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.BizTypeField">
         <id column="biz_type" jdbcType="VARCHAR" property="bizType"/>
-        <id column="name" jdbcType="VARCHAR" property="name"/>
+        <id column="field_name" jdbcType="VARCHAR" property="fieldName"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
-        <result column="mapped_field" jdbcType="VARCHAR" property="mappedField"/>
+        <result column="convert_field" jdbcType="VARCHAR" property="convertField"/>
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizTypeField">
-        <collection property="fieldMappingList"  column="{bizType=biz_type,fieldName=name}" ofType="map" javaType="java.util.ArrayList"
-                    select="com.wim.quartz.business.dao.FieldMappingMapper.findByBizTypeAndFieldName">
+        <collection property="convertFieldList"  column="{bizType=biz_type,fieldName=field_name}" ofType="map" javaType="java.util.ArrayList"
+                    select="com.wim.quartz.business.dao.ConvertFieldMapper.findByBizTypeAndFieldName">
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-    biz_type, name, description, mapped_field
+    biz_type, field_name, description, convert_field
   </sql>
     <select id="selectByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizTypeField"
             resultMap="BaseResultMap">
@@ -21,18 +21,18 @@
         <include refid="Base_Column_List"/>
         from bdc_biz_type_field
         where biz_type = #{bizType,jdbcType=VARCHAR}
-        and name = #{name,jdbcType=VARCHAR}
+        and field_name = #{fieldName,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizTypeField">
     delete from bdc_biz_type_field
     where biz_type = #{bizType,jdbcType=VARCHAR}
-      and name = #{name,jdbcType=VARCHAR}
+      and field_name = #{fieldName,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.BizTypeField">
-    insert into bdc_biz_type_field (biz_type, name, description, 
-      mapped_field)
-    values (#{bizType,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{mappedField,jdbcType=VARCHAR})
+    insert into bdc_biz_type_field (biz_type, field_name, description,
+      convert_field)
+    values (#{bizType,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{convertField,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.BizTypeField">
         insert into bdc_biz_type_field
@@ -40,28 +40,28 @@
             <if test="bizType != null">
                 biz_type,
             </if>
-            <if test="name != null">
-                name,
+            <if test="fieldName != null">
+                field_name,
             </if>
             <if test="description != null">
                 description,
             </if>
-            <if test="mappedField != null">
-                mapped_field,
+            <if test="convertField != null">
+                convert_field,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="bizType != null">
                 #{bizType,jdbcType=VARCHAR},
             </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
+            <if test="fieldName != null">
+                #{fieldName,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
             </if>
-            <if test="mappedField != null">
-                #{mappedField,jdbcType=VARCHAR},
+            <if test="convertField != null">
+                #{convertField,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -71,21 +71,21 @@
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
             </if>
-            <if test="mappedField != null">
-                mapped_field = #{mappedField,jdbcType=VARCHAR},
+            <if test="convertField != null">
+                convert_field = #{convertField,jdbcType=VARCHAR},
             </if>
         </set>
         where biz_type = #{bizType,jdbcType=VARCHAR}
-        and name = #{name,jdbcType=VARCHAR}
+        and field_name = #{fieldName,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizTypeField">
     update bdc_biz_type_field
     set description = #{description,jdbcType=VARCHAR},
-      mapped_field = #{mappedField,jdbcType=VARCHAR}
+      convert_field = #{convertField,jdbcType=VARCHAR}
     where biz_type = #{bizType,jdbcType=VARCHAR}
-      and name = #{name,jdbcType=VARCHAR}
+      and field_name = #{fieldName,jdbcType=VARCHAR}
   </update>
-    <select id="findByBizType" resultMap="AllResultMap">
+    <select id="findFieldListByBizType" resultMap="AllResultMap">
         select
         <include refid="Base_Column_List"/>
         from bdc_biz_type_field

@@ -1,5 +1,8 @@
 package com.wim.quartz.business.entity;
 
+import com.wim.quartz.business.enumeration.MoveFormalModeEnum;
+import com.wim.quartz.business.enumeration.SourceFromEnum;
+import com.wim.quartz.business.enumeration.SyncTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,28 +24,33 @@ public class BizType {
 
     private String bizTypeName;
 
-    private Integer dataType;
-
     private String fileRegex;
 
-    private String lowerCase;
+    private String syncFilePattern;
 
-    private String upperCase;
+    private String rejectFilePattern;
 
-    private String firstUpperOtherCamel;
+    private String receiptFilePattern;
 
-    private String firstLowerOtherCamel;
+    private Integer maxRecordsOneFile;
 
-    private String centerNetworks;
+    private SyncTypeEnum syncType;
 
-    private String provinceNetworks;
+    private SourceFromEnum sourceFrom;
 
-    //关联对象
+    private MoveFormalModeEnum moveFormalMode;
 
+    private String moveFormalOfNetUnitCode;
+
+    // 关联对象
+    /**
+     * 局数据字段列表
+     */
     private List<BizTypeField> fieldList;
-
-    private List<NetworkElement> centerNetworkList;
-
-    private List<NetworkElement> provinceNetworkList;
-
+    /**
+     * 同步网元配置列表
+     */
+    private List<SyncNetUnitConfig> syncNetUnitConfigList;
 }
+
+

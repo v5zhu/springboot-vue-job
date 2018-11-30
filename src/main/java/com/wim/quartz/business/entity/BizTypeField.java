@@ -18,12 +18,12 @@ public class BizTypeField {
 
     private String bizType;
 
-    private String name;
+    private String fieldName;
 
     private String description;
 
-    private String mappedField;
+    private String convertField;
 
-    private List<FieldMapping> fieldMappingList;
+    private List<ConvertField> convertFieldList;
 
 }

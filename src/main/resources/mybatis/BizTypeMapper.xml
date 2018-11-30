@@ -5,23 +5,23 @@
         <id column="biz_type" jdbcType="VARCHAR" property="bizType"/>
         <result column="biz_type_code" jdbcType="VARCHAR" property="bizTypeCode"/>
         <result column="biz_type_name" jdbcType="VARCHAR" property="bizTypeName"/>
-        <result column="data_type" jdbcType="INTEGER" property="dataType"/>
         <result column="file_regex" jdbcType="VARCHAR" property="fileRegex"/>
-        <result column="lower_case" jdbcType="VARCHAR" property="lowerCase"/>
-        <result column="upper_case" jdbcType="VARCHAR" property="upperCase"/>
-        <result column="first_upper_other_camel" jdbcType="VARCHAR" property="firstUpperOtherCamel"/>
-        <result column="first_lower_other_camel" jdbcType="VARCHAR" property="firstLowerOtherCamel"/>
-        <!--<result column="center_networks" jdbcType="VARCHAR" property="centerNetworks"/>-->
-        <!--<result column="province_networks" jdbcType="VARCHAR" property="provinceNetworks"/>-->
+        <result column="sync_file_pattern" jdbcType="VARCHAR" property="syncFilePattern"/>
+        <result column="reject_file_pattern" jdbcType="VARCHAR" property="rejectFilePattern"/>
+        <result column="receipt_file_pattern" jdbcType="VARCHAR" property="receiptFilePattern"/>
+        <result column="max_records_one_file" jdbcType="INTEGER" property="maxRecordsOneFile"/>
+        <result column="sync_type" jdbcType="INTEGER" property="syncType" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="source_from" jdbcType="INTEGER" property="sourceFrom" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="move_formal_mode" jdbcType="INTEGER" property="moveFormalMode" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="move_formal_of_net_unit_code" jdbcType="VARCHAR" property="moveFormalOfNetUnitCode"/>
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
-        <collection property="fieldList" column="biz_type" select="com.wim.quartz.business.dao.BizTypeFieldMapper.findByBizType"></collection>
-        <!--<collection property="centerNetworkList" column="center_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>-->
-        <!--<collection property="provinceNetworkList" column="province_networks" select="com.wim.quartz.business.dao.NetworkElementMapper.findByCodes"></collection>-->
+        <collection property="fieldList" column="biz_type" select="com.wim.quartz.business.dao.BizTypeFieldMapper.findFieldListByBizType"></collection>
+        <collection property="syncNetUnitConfigList" column="biz_type" select="com.wim.quartz.business.dao.SyncNetUnitConfigMapper.findListByBizType"></collection>
     </resultMap>
     <sql id="Base_Column_List">
-    biz_type, biz_type_code, biz_type_name, data_type, file_regex, lower_case, upper_case, 
-    first_upper_other_camel, first_lower_other_camel
+    biz_type, biz_type_code, biz_type_name, file_regex,sync_file_pattern,reject_file_pattern,receipt_file_pattern,
+    max_records_one_file,sync_type,source_from,move_formal_mode,move_formal_of_net_unit_code
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -39,15 +39,16 @@
     where biz_type = #{bizType,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.BizType">
-    insert into bdc_biz_type (biz_type, biz_type_code, biz_type_name, 
-      data_type, file_regex, lower_case, 
-      upper_case, first_upper_other_camel, first_lower_other_camel
-      )
-    values (#{bizType,jdbcType=VARCHAR}, #{bizTypeCode,jdbcType=VARCHAR}, #{bizTypeName,jdbcType=VARCHAR}, 
-      #{dataType,jdbcType=INTEGER}, #{fileRegex,jdbcType=VARCHAR}, #{lowerCase,jdbcType=VARCHAR}, 
-      #{upperCase,jdbcType=VARCHAR}, #{firstUpperOtherCamel,jdbcType=VARCHAR}, #{firstLowerOtherCamel,jdbcType=VARCHAR}
-
-      )
+    insert into bdc_biz_type (biz_type, biz_type_code, biz_type_name,
+      file_regex, sync_file_pattern, reject_file_pattern,
+      receipt_file_pattern, max_records_one_file,
+      sync_type, source_from, move_formal_mode,
+      move_formal_of_net_unit_code)
+    values (#{bizType,jdbcType=VARCHAR}, #{bizTypeCode,jdbcType=VARCHAR}, #{bizTypeName,jdbcType=VARCHAR},
+      #{fileRegex,jdbcType=VARCHAR}, #{syncFilePattern,jdbcType=VARCHAR}, #{rejectFilePattern,jdbcType=VARCHAR},
+      #{receiptFilePattern,jdbcType=VARCHAR}, #{maxRecordsOneFile,jdbcType=INTEGER},
+      #{syncType,jdbcType=INTEGER}, #{sourceFrom,jdbcType=INTEGER}, #{moveFormalMode,jdbcType=INTEGER},
+      #{moveFormalOfNetUnitCode,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.BizType">
         insert into bdc_biz_type
@@ -61,23 +62,32 @@
             <if test="bizTypeName != null">
                 biz_type_name,
             </if>
-            <if test="dataType != null">
-                data_type,
-            </if>
             <if test="fileRegex != null">
                 file_regex,
             </if>
-            <if test="lowerCase != null">
-                lower_case,
+            <if test="syncFilePattern != null">
+                sync_file_pattern,
             </if>
-            <if test="upperCase != null">
-                upper_case,
+            <if test="rejectFilePattern != null">
+                reject_file_pattern,
             </if>
-            <if test="firstUpperOtherCamel != null">
-                first_upper_other_camel,
+            <if test="receiptFilePattern != null">
+                receipt_file_pattern,
             </if>
-            <if test="firstLowerOtherCamel != null">
-                first_lower_other_camel,
+            <if test="maxRecordsOneFile != null">
+                max_records_one_file,
+            </if>
+            <if test="syncType != null">
+                sync_type,
+            </if>
+            <if test="sourceFrom != null">
+                source_from,
+            </if>
+            <if test="moveFormalMode != null">
+                move_formal_mode,
+            </if>
+            <if test="moveFormalOfNetUnitCode != null">
+                move_formal_of_net_unit_code,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -90,23 +100,32 @@
             <if test="bizTypeName != null">
                 #{bizTypeName,jdbcType=VARCHAR},
             </if>
-            <if test="dataType != null">
-                #{dataType,jdbcType=INTEGER},
-            </if>
             <if test="fileRegex != null">
                 #{fileRegex,jdbcType=VARCHAR},
             </if>
-            <if test="lowerCase != null">
-                #{lowerCase,jdbcType=VARCHAR},
+            <if test="syncFilePattern != null">
+                #{syncFilePattern,jdbcType=VARCHAR},
             </if>
-            <if test="upperCase != null">
-                #{upperCase,jdbcType=VARCHAR},
+            <if test="rejectFilePattern != null">
+                #{rejectFilePattern,jdbcType=VARCHAR},
             </if>
-            <if test="firstUpperOtherCamel != null">
-                #{firstUpperOtherCamel,jdbcType=VARCHAR},
+            <if test="receiptFilePattern != null">
+                #{receiptFilePattern,jdbcType=VARCHAR},
             </if>
-            <if test="firstLowerOtherCamel != null">
-                #{firstLowerOtherCamel,jdbcType=VARCHAR},
+            <if test="maxRecordsOneFile != null">
+                #{maxRecordsOneFile,jdbcType=INTEGER},
+            </if>
+            <if test="syncType != null">
+                #{syncType,jdbcType=INTEGER},
+            </if>
+            <if test="sourceFrom != null">
+                #{sourceFrom,jdbcType=INTEGER},
+            </if>
+            <if test="moveFormalMode != null">
+                #{moveFormalMode,jdbcType=INTEGER},
+            </if>
+            <if test="moveFormalOfNetUnitCode != null">
+                #{moveFormalOfNetUnitCode,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -119,23 +138,32 @@
             <if test="bizTypeName != null">
                 biz_type_name = #{bizTypeName,jdbcType=VARCHAR},
             </if>
-            <if test="dataType != null">
-                data_type = #{dataType,jdbcType=INTEGER},
-            </if>
             <if test="fileRegex != null">
                 file_regex = #{fileRegex,jdbcType=VARCHAR},
             </if>
-            <if test="lowerCase != null">
-                lower_case = #{lowerCase,jdbcType=VARCHAR},
+            <if test="syncFilePattern != null">
+                sync_file_pattern = #{syncFilePattern,jdbcType=VARCHAR},
             </if>
-            <if test="upperCase != null">
-                upper_case = #{upperCase,jdbcType=VARCHAR},
+            <if test="rejectFilePattern != null">
+                reject_file_pattern = #{rejectFilePattern,jdbcType=VARCHAR},
             </if>
-            <if test="firstUpperOtherCamel != null">
-                first_upper_other_camel = #{firstUpperOtherCamel,jdbcType=VARCHAR},
+            <if test="receiptFilePattern != null">
+                receipt_file_pattern = #{receiptFilePattern,jdbcType=VARCHAR},
             </if>
-            <if test="firstLowerOtherCamel != null">
-                first_lower_other_camel = #{firstLowerOtherCamel,jdbcType=VARCHAR},
+            <if test="maxRecordsOneFile != null">
+                max_records_one_file = #{maxRecordsOneFile,jdbcType=INTEGER},
+            </if>
+            <if test="syncType != null">
+                sync_type = #{syncType,jdbcType=INTEGER},
+            </if>
+            <if test="sourceFrom != null">
+                source_from = #{sourceFrom,jdbcType=INTEGER},
+            </if>
+            <if test="moveFormalMode != null">
+                move_formal_mode = #{moveFormalMode,jdbcType=INTEGER},
+            </if>
+            <if test="moveFormalOfNetUnitCode != null">
+                move_formal_of_net_unit_code = #{moveFormalOfNetUnitCode,jdbcType=VARCHAR},
             </if>
         </set>
         where biz_type = #{bizType,jdbcType=VARCHAR}
@@ -144,12 +172,15 @@
     update bdc_biz_type
     set biz_type_code = #{bizTypeCode,jdbcType=VARCHAR},
       biz_type_name = #{bizTypeName,jdbcType=VARCHAR},
-      data_type = #{dataType,jdbcType=INTEGER},
       file_regex = #{fileRegex,jdbcType=VARCHAR},
-      lower_case = #{lowerCase,jdbcType=VARCHAR},
-      upper_case = #{upperCase,jdbcType=VARCHAR},
-      first_upper_other_camel = #{firstUpperOtherCamel,jdbcType=VARCHAR},
-      first_lower_other_camel = #{firstLowerOtherCamel,jdbcType=VARCHAR}
+      sync_file_pattern = #{syncFilePattern,jdbcType=VARCHAR},
+      reject_file_pattern = #{rejectFilePattern,jdbcType=VARCHAR},
+      receipt_file_pattern = #{receiptFilePattern,jdbcType=VARCHAR},
+      max_records_one_file = #{maxRecordsOneFile,jdbcType=INTEGER},
+      sync_type = #{syncType,jdbcType=INTEGER},
+      source_from = #{sourceFrom,jdbcType=INTEGER},
+      move_formal_mode = #{moveFormalMode,jdbcType=INTEGER},
+      move_formal_of_net_unit_code = #{moveFormalOfNetUnitCode,jdbcType=VARCHAR}
     where biz_type = #{bizType,jdbcType=VARCHAR}
   </update>
 </mapper>

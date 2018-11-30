@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wim.quartz.business.dao.NetUnitMapper">
+    <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.NetUnit">
+        <id column="net_unit_code" jdbcType="VARCHAR" property="netUnitCode" />
+        <result column="net_unit_name" jdbcType="VARCHAR" property="netUnitName" />
+        <result column="ftp_name" jdbcType="VARCHAR" property="ftpName" />
+        <result column="ftp_description" jdbcType="VARCHAR" property="ftpDescription" />
+        <result column="host" jdbcType="VARCHAR" property="host" />
+        <result column="port" jdbcType="VARCHAR" property="port" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="localsenddir" jdbcType="VARCHAR" property="localsenddir" />
+        <result column="localsendtempdir" jdbcType="VARCHAR" property="localsendtempdir" />
+        <result column="remotesenddir" jdbcType="VARCHAR" property="remotesenddir" />
+        <result column="remotesendtempdir" jdbcType="VARCHAR" property="remotesendtempdir" />
+        <result column="localreceivedir" jdbcType="VARCHAR" property="localreceivedir" />
+        <result column="localreceivetempdir" jdbcType="VARCHAR" property="localreceivetempdir" />
+        <result column="remotereceivedir" jdbcType="VARCHAR" property="remotereceivedir" />
+        <result column="remotereceivetempdir" jdbcType="VARCHAR" property="remotereceivetempdir" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    net_unit_code, net_unit_name, ftp_name, ftp_desc, host, port, username, password,
+    localsenddir, localsendtempdir, remotesenddir, remotesendtempdir, localreceivedir,
+    localreceivetempdir, remotereceivedir, remotereceivetempdir
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from bdc_net_unit
+        where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bdc_net_unit
+    where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.wim.quartz.business.entity.NetUnit">
+    insert into bdc_net_unit (net_unit_code, net_unit_name, ftp_name,
+      ftp_desc, host, port,
+      username, password, localsenddir,
+      localsendtempdir, remotesenddir, remotesendtempdir,
+      localreceivedir, localreceivetempdir, remotereceivedir,
+      remotereceivetempdir)
+    values (#{netUnitCode,jdbcType=VARCHAR}, #{netUnitName,jdbcType=VARCHAR}, #{ftpName,jdbcType=VARCHAR},
+      #{ftpDesc,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR},
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{localsenddir,jdbcType=VARCHAR},
+      #{localsendtempdir,jdbcType=VARCHAR}, #{remotesenddir,jdbcType=VARCHAR}, #{remotesendtempdir,jdbcType=VARCHAR},
+      #{localreceivedir,jdbcType=VARCHAR}, #{localreceivetempdir,jdbcType=VARCHAR}, #{remotereceivedir,jdbcType=VARCHAR},
+      #{remotereceivetempdir,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.NetUnit">
+        insert into bdc_net_unit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="netUnitCode != null">
+                net_unit_code,
+            </if>
+            <if test="netUnitName != null">
+                net_unit_name,
+            </if>
+            <if test="ftpName != null">
+                ftp_name,
+            </if>
+            <if test="ftpDesc != null">
+                ftp_desc,
+            </if>
+            <if test="host != null">
+                host,
+            </if>
+            <if test="port != null">
+                port,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="localsenddir != null">
+                localsenddir,
+            </if>
+            <if test="localsendtempdir != null">
+                localsendtempdir,
+            </if>
+            <if test="remotesenddir != null">
+                remotesenddir,
+            </if>
+            <if test="remotesendtempdir != null">
+                remotesendtempdir,
+            </if>
+            <if test="localreceivedir != null">
+                localreceivedir,
+            </if>
+            <if test="localreceivetempdir != null">
+                localreceivetempdir,
+            </if>
+            <if test="remotereceivedir != null">
+                remotereceivedir,
+            </if>
+            <if test="remotereceivetempdir != null">
+                remotereceivetempdir,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="netUnitCode != null">
+                #{netUnitCode,jdbcType=VARCHAR},
+            </if>
+            <if test="netUnitName != null">
+                #{netUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="ftpName != null">
+                #{ftpName,jdbcType=VARCHAR},
+            </if>
+            <if test="ftpDesc != null">
+                #{ftpDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="host != null">
+                #{host,jdbcType=VARCHAR},
+            </if>
+            <if test="port != null">
+                #{port,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="localsenddir != null">
+                #{localsenddir,jdbcType=VARCHAR},
+            </if>
+            <if test="localsendtempdir != null">
+                #{localsendtempdir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotesenddir != null">
+                #{remotesenddir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotesendtempdir != null">
+                #{remotesendtempdir,jdbcType=VARCHAR},
+            </if>
+            <if test="localreceivedir != null">
+                #{localreceivedir,jdbcType=VARCHAR},
+            </if>
+            <if test="localreceivetempdir != null">
+                #{localreceivetempdir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotereceivedir != null">
+                #{remotereceivedir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotereceivetempdir != null">
+                #{remotereceivetempdir,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.NetUnit">
+        update bdc_net_unit
+        <set>
+            <if test="netUnitName != null">
+                net_unit_name = #{netUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="ftpName != null">
+                ftp_name = #{ftpName,jdbcType=VARCHAR},
+            </if>
+            <if test="ftpDesc != null">
+                ftp_desc = #{ftpDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="host != null">
+                host = #{host,jdbcType=VARCHAR},
+            </if>
+            <if test="port != null">
+                port = #{port,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="localsenddir != null">
+                localsenddir = #{localsenddir,jdbcType=VARCHAR},
+            </if>
+            <if test="localsendtempdir != null">
+                localsendtempdir = #{localsendtempdir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotesenddir != null">
+                remotesenddir = #{remotesenddir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotesendtempdir != null">
+                remotesendtempdir = #{remotesendtempdir,jdbcType=VARCHAR},
+            </if>
+            <if test="localreceivedir != null">
+                localreceivedir = #{localreceivedir,jdbcType=VARCHAR},
+            </if>
+            <if test="localreceivetempdir != null">
+                localreceivetempdir = #{localreceivetempdir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotereceivedir != null">
+                remotereceivedir = #{remotereceivedir,jdbcType=VARCHAR},
+            </if>
+            <if test="remotereceivetempdir != null">
+                remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.NetUnit">
+    update bdc_net_unit
+    set net_unit_name = #{netUnitName,jdbcType=VARCHAR},
+      ftp_name = #{ftpName,jdbcType=VARCHAR},
+      ftp_desc = #{ftpDesc,jdbcType=VARCHAR},
+      host = #{host,jdbcType=VARCHAR},
+      port = #{port,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      localsenddir = #{localsenddir,jdbcType=VARCHAR},
+      localsendtempdir = #{localsendtempdir,jdbcType=VARCHAR},
+      remotesenddir = #{remotesenddir,jdbcType=VARCHAR},
+      remotesendtempdir = #{remotesendtempdir,jdbcType=VARCHAR},
+      localreceivedir = #{localreceivedir,jdbcType=VARCHAR},
+      localreceivetempdir = #{localreceivetempdir,jdbcType=VARCHAR},
+      remotereceivedir = #{remotereceivedir,jdbcType=VARCHAR},
+      remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR}
+    where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+  </update>
+    <select id="findByCodes" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_net_unit
+        where system_code in concat('(',#{codes},')')
+    </select>
+</mapper>

@@ -8,13 +8,16 @@ import lombok.Setter;
  * @project Project Collections
  * @package com.wim.quartz.business.entity
  * @description
- * @time 2018/11/16 22:01
+ * @time 2018/11/16 21:58
  */
 @Getter
 @Setter
-public class NetworkElement {
-    private Integer systemCode;
+public class ConvertField {
+    private String bizType;
 
-    private String systemName;
+    private String field;
 
+    private String fieldKey;
+
+    private String fieldValue;
 }

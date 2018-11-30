@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wim.quartz.business.dao.SyncNetUnitConfigMapper">
+    <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.SyncNetUnitConfig">
+        <result column="biz_type" jdbcType="VARCHAR" property="bizType"/>
+        <result column="net_unit_code" jdbcType="VARCHAR" property="netUnitCode"/>
+        <result column="net_unit_name" jdbcType="VARCHAR" property="netUnitName"/>
+        <result column="net_unit_ftp_name" jdbcType="VARCHAR" property="netUnitFtpName"/>
+        <result column="file_format" jdbcType="VARCHAR" property="fileFormat"/>
+        <result column="biz_type_fields" jdbcType="VARCHAR" property="bizTypeFields"/>
+        <result column="file_fields" jdbcType="VARCHAR" property="fileFields"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    biz_type, net_unit_code, net_unit_name, net_unit_ftp_name, file_format, biz_type_fields, file_fields, description
+  </sql>
+    <insert id="insert" parameterType="com.wim.quartz.business.entity.SyncNetUnitConfig">
+    insert into bdc_sync_net_unit_config (biz_type, net_unit_code, net_unit_name, 
+      net_unit_ftp_name, file_format, biz_type_fields, 
+      file_fields, description)
+    values (#{bizType,jdbcType=VARCHAR}, #{netUnitCode,jdbcType=VARCHAR}, #{netUnitName,jdbcType=VARCHAR}, 
+      #{netUnitFtpName,jdbcType=VARCHAR}, #{fileFormat,jdbcType=VARCHAR}, #{bizTypeFields,jdbcType=VARCHAR}, 
+      #{fileFields,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.SyncNetUnitConfig">
+        insert into bdc_sync_net_unit_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bizType != null">
+                biz_type,
+            </if>
+            <if test="netUnitCode != null">
+                net_unit_code,
+            </if>
+            <if test="netUnitName != null">
+                net_unit_name,
+            </if>
+            <if test="netUnitFtpName != null">
+                net_unit_ftp_name,
+            </if>
+            <if test="fileFormat != null">
+                file_format,
+            </if>
+            <if test="bizTypeFields != null">
+                biz_type_fields,
+            </if>
+            <if test="fileFields != null">
+                file_fields,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bizType != null">
+                #{bizType,jdbcType=VARCHAR},
+            </if>
+            <if test="netUnitCode != null">
+                #{netUnitCode,jdbcType=VARCHAR},
+            </if>
+            <if test="netUnitName != null">
+                #{netUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="netUnitFtpName != null">
+                #{netUnitFtpName,jdbcType=VARCHAR},
+            </if>
+            <if test="fileFormat != null">
+                #{fileFormat,jdbcType=VARCHAR},
+            </if>
+            <if test="bizTypeFields != null">
+                #{bizTypeFields,jdbcType=VARCHAR},
+            </if>
+            <if test="fileFields != null">
+                #{fileFields,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="findListByBizType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_sync_net_unit_config where biz_type=#{bizType}
+    </select>
+</mapper>

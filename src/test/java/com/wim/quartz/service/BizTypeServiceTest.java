@@ -1,6 +1,5 @@
 package com.wim.quartz.service;
 
-import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.wim.quartz.JobApplication;
 import com.wim.quartz.business.entity.BizType;
@@ -29,6 +28,9 @@ public class BizTypeServiceTest {
     @Test
     public void test(){
         PageInfo<BizType> page=bizTypeService.bizTypeList(1,10);
-        System.out.println(JSONArray.toJSONString(page.getList()));
+
+        page.getList().parallelStream().forEach(bizType -> {
+            System.out.println(bizType.getSyncType().name()+">>"+bizType.getSyncType().code());
+        });
     }
 }
