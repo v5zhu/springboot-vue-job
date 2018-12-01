@@ -7,6 +7,7 @@
         <result column="center" jdbcType="INTEGER" property="center"/>
         <result column="ftp_name" jdbcType="VARCHAR" property="ftpName"/>
         <result column="ftp_description" jdbcType="VARCHAR" property="ftpDescription"/>
+        <result column="protocol" jdbcType="VARCHAR" property="protocol"/>
         <result column="host" jdbcType="VARCHAR" property="host"/>
         <result column="port" jdbcType="VARCHAR" property="port"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
@@ -21,7 +22,7 @@
         <result column="remotereceivetempdir" jdbcType="VARCHAR" property="remotereceivetempdir"/>
     </resultMap>
     <sql id="Base_Column_List">
-    net_unit_code, net_unit_name,center, ftp_name, ftp_description, host, port, username, password,
+    net_unit_code, net_unit_name,center, ftp_name, ftp_description,protocol, host, port, username, password,
     localsenddir, localsendtempdir, remotesenddir, remotesendtempdir, localreceivedir,
     localreceivetempdir, remotereceivedir, remotereceivetempdir
   </sql>
@@ -37,13 +38,13 @@
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.NetUnit">
     insert into bdc_net_unit (net_unit_code, net_unit_name,center, ftp_name,
-      ftp_description, host, port,
+      ftp_description, protocol,host, port,
       username, password, localsenddir,
       localsendtempdir, remotesenddir, remotesendtempdir,
       localreceivedir, localreceivetempdir, remotereceivedir,
       remotereceivetempdir)
     values (#{netUnitCode,jdbcType=VARCHAR}, #{netUnitName,jdbcType=VARCHAR},#{center,jdbcType=INTEGER}, #{ftpName,jdbcType=VARCHAR},
-      #{ftpDescription,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR},
+      #{ftpDescription,jdbcType=VARCHAR},#{protocol,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR},
       #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{localsenddir,jdbcType=VARCHAR},
       #{localsendtempdir,jdbcType=VARCHAR}, #{remotesenddir,jdbcType=VARCHAR}, #{remotesendtempdir,jdbcType=VARCHAR},
       #{localreceivedir,jdbcType=VARCHAR}, #{localreceivetempdir,jdbcType=VARCHAR}, #{remotereceivedir,jdbcType=VARCHAR},
@@ -66,6 +67,9 @@
             </if>
             <if test="ftpDescription != null">
                 ftp_description,
+            </if>
+            <if test="protocol != null">
+                protocol,
             </if>
             <if test="host != null">
                 host,
@@ -120,6 +124,9 @@
             <if test="ftpDescription != null">
                 #{ftpDescription,jdbcType=VARCHAR},
             </if>
+            <if test="protocol != null">
+                #{protocol,jdbcType=VARCHAR},
+            </if>
             <if test="host != null">
                 #{host,jdbcType=VARCHAR},
             </if>
@@ -173,6 +180,9 @@
             <if test="ftpDescription != null">
                 ftp_description = #{ftpDescription,jdbcType=VARCHAR},
             </if>
+            <if test="protocol != null">
+                protocol = #{protocol,jdbcType=VARCHAR},
+            </if>
             <if test="host != null">
                 host = #{host,jdbcType=VARCHAR},
             </if>
@@ -218,6 +228,7 @@
       center = #{center,jdbcType=INTEGER},
       ftp_name = #{ftpName,jdbcType=VARCHAR},
       ftp_description = #{ftpDescription,jdbcType=VARCHAR},
+      protocol = #{protocol,jdbcType=VARCHAR},
       host = #{host,jdbcType=VARCHAR},
       port = #{port,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
@@ -237,5 +248,10 @@
         select
         <include refid="Base_Column_List"/>
         from bdc_net_unit where net_unit_code=#{netUnitCode}
+    </select>
+    <select id="selectAllForPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_net_unit
     </select>
 </mapper>

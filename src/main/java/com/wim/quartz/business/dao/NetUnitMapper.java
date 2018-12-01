@@ -4,6 +4,8 @@ package com.wim.quartz.business.dao;
 import com.wim.quartz.business.entity.NetUnit;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface NetUnitMapper {
     int deleteByPrimaryKey(String systemCode);
@@ -19,4 +21,7 @@ public interface NetUnitMapper {
     int updateByPrimaryKey(NetUnit record);
 
     NetUnit findByNetUnitCode(String netUnitCode);
+
+    List<NetUnit> selectAllForPage();
+
 }

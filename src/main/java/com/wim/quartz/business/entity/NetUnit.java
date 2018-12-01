@@ -23,6 +23,8 @@ public class NetUnit {
 
     private String ftpDescription;
 
+    private String protocol;
+
     private String host;
 
     private Integer port;
