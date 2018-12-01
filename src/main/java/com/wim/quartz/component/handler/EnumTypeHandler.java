@@ -1,6 +1,8 @@
 package com.wim.quartz.component.handler;
 
 import com.wim.quartz.business.enumeration.CodeBaseEnum;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
@@ -16,7 +18,7 @@ import java.sql.SQLException;
  * @description
  * @time 2018/11/30 12:45
  */
-public class EnumTypeHandler<E extends Enum<?> & CodeBaseEnum> extends BaseTypeHandler<CodeBaseEnum> {
+public class EnumTypeHandler<E extends Enum<?> & CodeBaseEnum<Object>> extends BaseTypeHandler<CodeBaseEnum<Object>> {
     private Class<E> clazz;
 
     public EnumTypeHandler(Class<E> enumType) {
@@ -30,29 +32,30 @@ public class EnumTypeHandler<E extends Enum<?> & CodeBaseEnum> extends BaseTypeH
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, CodeBaseEnum parameter, JdbcType jdbcType)
             throws SQLException {
-        ps.setInt(i, parameter.code());
+        ps.setObject(i, parameter.getValue());
     }
 
     @Override
     public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        return codeOf(clazz, rs.getInt(columnName));
+        return codeOf(clazz, rs.getObject(columnName));
     }
 
     @Override
     public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        return codeOf(clazz, rs.getInt(columnIndex));
+        return codeOf(clazz, rs.getObject(columnIndex));
     }
 
     @Override
     public E getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return codeOf(clazz, cs.getInt(columnIndex));
+        return codeOf(clazz, cs.getObject(columnIndex));
     }
 
 
-    public static <E extends Enum<?> & CodeBaseEnum> E codeOf(Class<E> enumClass, int code) {
+    public static <E extends Enum<?> & CodeBaseEnum> E codeOf(Class<E> enumClass, Object code) {
         E[] enumConstants = enumClass.getEnumConstants();
         for (E e : enumConstants) {
-            if (e.code() == code) {
+            final Object v = e.getValue();
+            if (v != null && code != null && v.equals(code)){
                 return e;
             }
         }

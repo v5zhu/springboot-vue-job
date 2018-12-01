@@ -7,7 +7,7 @@ package com.wim.quartz.business.enumeration;
  * @description
  * @time 2018/11/30 10:31
  */
-public enum SourceFromEnum implements CodeBaseEnum {
+public enum SourceFromEnum implements CodeBaseEnum<Integer> {
     /**
      * 全网
      */
@@ -23,8 +23,9 @@ public enum SourceFromEnum implements CodeBaseEnum {
         this.sourceFrom = from;
     }
 
+
     @Override
-    public int code() {
+    public Integer getValue() {
         return this.sourceFrom;
     }
 }

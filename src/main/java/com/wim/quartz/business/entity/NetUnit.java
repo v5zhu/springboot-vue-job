@@ -1,5 +1,6 @@
 package com.wim.quartz.business.entity;
 
+import com.wim.quartz.business.enumeration.FtpStyleEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,8 @@ public class NetUnit {
 
     private String protocol;
 
+    private FtpStyleEnum ftpStyle;
+
     private String host;
 
     private Integer port;
@@ -32,6 +35,8 @@ public class NetUnit {
     private String username;
 
     private String password;
+
+    private Integer timeout;
 
     private String localsenddir;
 

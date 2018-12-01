@@ -7,7 +7,7 @@ package com.wim.quartz.business.enumeration;
  * @description
  * @time 2018/11/30 10:31
  */
-public enum MoveFormalModeEnum implements CodeBaseEnum {
+public enum MoveFormalModeEnum implements CodeBaseEnum<Integer> {
     /**
      * 待所有网元加载成功的局数据入正式表
      */
@@ -23,8 +23,9 @@ public enum MoveFormalModeEnum implements CodeBaseEnum {
         this.moveFormalMode = mode;
     }
 
+
     @Override
-    public int code() {
+    public Integer getValue() {
         return this.moveFormalMode;
     }
 }

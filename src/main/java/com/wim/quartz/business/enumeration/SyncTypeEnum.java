@@ -7,7 +7,7 @@ package com.wim.quartz.business.enumeration;
  * @description
  * @time 2018/11/30 10:31
  */
-public enum SyncTypeEnum implements CodeBaseEnum {
+public enum SyncTypeEnum implements CodeBaseEnum<Integer> {
     /**
      * 全量同步
      */
@@ -23,8 +23,9 @@ public enum SyncTypeEnum implements CodeBaseEnum {
         this.syncType = type;
     }
 
+
     @Override
-    public int code() {
+    public Integer getValue() {
         return this.syncType;
     }
 }
