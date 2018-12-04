@@ -48,7 +48,7 @@ public class BizType extends IdEntity{
     /**
      * 局数据字段列表
      */
-    private List<BizTypeField> fieldList;
+    private List<TableField> fieldList;
     /**
      * 同步网元配置列表
      */

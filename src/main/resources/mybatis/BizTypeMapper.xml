@@ -18,7 +18,7 @@
         <result column="order" jdbcType="INTEGER" property="order"/>
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
-        <collection property="fieldList" column="id" select="com.wim.quartz.business.dao.BizTypeFieldMapper.findFieldListByBizId"></collection>
+        <collection property="fieldList" column="id" select="com.wim.quartz.business.dao.TableFieldMapper.findFieldListByBizId"></collection>
         <collection property="syncConfigList" column="id" select="com.wim.quartz.business.dao.SyncConfigMapper.findListByBizId"></collection>
     </resultMap>
     <sql id="Base_Column_List">

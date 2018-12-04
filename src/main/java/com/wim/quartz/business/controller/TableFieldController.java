@@ -2,8 +2,8 @@ package com.wim.quartz.business.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.wim.quartz.business.controller.base.BaseController;
-import com.wim.quartz.business.entity.BizTypeField;
-import com.wim.quartz.business.service.BizTypeFieldService;
+import com.wim.quartz.business.entity.TableField;
+import com.wim.quartz.business.service.TableFieldService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1")
 @CrossOrigin
-public class BizTypeFieldController extends BaseController {
+public class TableFieldController extends BaseController {
 
     @Autowired
-    private BizTypeFieldService bizTypeFieldService;
+    private TableFieldService tableFieldService;
 
     @ApiOperation(value = "局数据字段列表", notes = "获取数据库指定局数据字段列表")
     @GetMapping("biz_type_field_list.ajax")
@@ -28,7 +28,7 @@ public class BizTypeFieldController extends BaseController {
     public ResponseEntity bizTypeFieldList(@RequestParam(value = "bizId") Long bizId,
                                            @RequestParam(value = "pageNum") int pageNum,
                                            @RequestParam(value = "pageSize") int pageSize) {
-        PageInfo<BizTypeField> pageInfo = bizTypeFieldService.bizTypeFieldList(bizId, pageNum, pageSize);
+        PageInfo<TableField> pageInfo = tableFieldService.bizTypeFieldList(bizId, pageNum, pageSize);
         return new ResponseEntity(pageInfo, HttpStatus.OK);
     }
 
@@ -36,8 +36,8 @@ public class BizTypeFieldController extends BaseController {
     @ApiOperation(value = "添加局数据字段", notes = "添加局数据字段")
     @PostMapping("biz_type_field_add.ajax")
     @ResponseBody
-    public ResponseEntity addBizTypeField(@RequestBody BizTypeField bizType) {
-        bizTypeFieldService.addBizTypeField(bizType);
+    public ResponseEntity addBizTypeField(@RequestBody TableField bizType) {
+        tableFieldService.addBizTypeField(bizType);
         return new ResponseEntity(null, HttpStatus.OK);
     }
 

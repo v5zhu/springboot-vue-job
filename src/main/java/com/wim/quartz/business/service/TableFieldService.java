@@ -1,7 +1,7 @@
 package com.wim.quartz.business.service;
 
 import com.github.pagehelper.PageInfo;
-import com.wim.quartz.business.entity.BizTypeField;
+import com.wim.quartz.business.entity.TableField;
 
 /**
  * @author zhuxiaolong
@@ -10,9 +10,9 @@ import com.wim.quartz.business.entity.BizTypeField;
  * @description
  * @time 2018/11/17 22:08
  */
-public interface BizTypeFieldService {
+public interface TableFieldService {
 
-    void addBizTypeField(BizTypeField field);
+    void addBizTypeField(TableField field);
 
-    PageInfo<BizTypeField> bizTypeFieldList(Long bizId,Integer pageNum, Integer pageSize);
+    PageInfo<TableField> bizTypeFieldList(Long bizId, Integer pageNum, Integer pageSize);
 }

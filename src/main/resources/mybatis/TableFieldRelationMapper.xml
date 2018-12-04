@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wim.quartz.business.dao.TableFieldRelationMapper">
+    <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.TableFieldRelation">
+        <id column="table_id" jdbcType="BIGINT" property="tableId"/>
+        <id column="field_id" jdbcType="BIGINT" property="fieldId"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="order" jdbcType="INTEGER" property="order"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    table_id, field_id, description, `order`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="com.wim.quartz.business.entity.TableFieldRelation"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_table_field_relation
+        where table_id = #{tableId,jdbcType=BIGINT}
+        and field_id = #{fieldId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.wim.quartz.business.entity.TableFieldRelation">
+    delete from bdc_table_field_relation
+    where table_id = #{tableId,jdbcType=BIGINT}
+      and field_id = #{fieldId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wim.quartz.business.entity.TableFieldRelation">
+    insert into bdc_table_field_relation (table_id, field_id, description, 
+      `order`)
+    values (#{tableId,jdbcType=BIGINT}, #{fieldId,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, 
+      #{order,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.TableFieldRelation">
+        insert into bdc_table_field_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tableId != null">
+                table_id,
+            </if>
+            <if test="fieldId != null">
+                field_id,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="order != null">
+                `order`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tableId != null">
+                #{tableId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldId != null">
+                #{fieldId,jdbcType=BIGINT},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                #{order,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.TableFieldRelation">
+        update bdc_table_field_relation
+        <set>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=INTEGER},
+            </if>
+        </set>
+        where table_id = #{tableId,jdbcType=BIGINT}
+        and field_id = #{fieldId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.TableFieldRelation">
+    update bdc_table_field_relation
+    set description = #{description,jdbcType=VARCHAR},
+      `order` = #{order,jdbcType=INTEGER}
+    where table_id = #{tableId,jdbcType=BIGINT}
+      and field_id = #{fieldId,jdbcType=BIGINT}
+  </update>
+    <select id="selectAllForPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_table_field_relation
+        order by `order` asc
+    </select>
+
+</mapper>
