@@ -96,4 +96,10 @@
         from bdc_sync_file_error where sync_id=#{syncId}
         order by `order` asc
     </select>
+    <select id="selectAllForPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_sync_file_error
+        order by `order` asc
+    </select>
 </mapper>

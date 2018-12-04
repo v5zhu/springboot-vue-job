@@ -22,4 +22,5 @@ public interface SyncRecordErrorMapper {
 
     List<SyncRecordError> findListBySyncId(Long syncId);
 
+    List<SyncRecordError> selectAllForPage();
 }

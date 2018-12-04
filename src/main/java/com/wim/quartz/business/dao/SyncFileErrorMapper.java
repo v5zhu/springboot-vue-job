@@ -22,4 +22,5 @@ public interface SyncFileErrorMapper {
 
     List<SyncFileError> findListBySyncId(Long syncId);
 
+    List<SyncFileError> selectAllForPage();
 }
