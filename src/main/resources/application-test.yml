@@ -7,8 +7,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://47.96.28.236:3306/sonnx-dev?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
-    username: root
-    password: zhuxiaolong13880298929
+    username: guest
+    password: 123456
     tomcat:
       initial-size: 20
       min-idle: 20
@@ -68,8 +68,8 @@ quartz-cluster:
   data-source:
     driver: com.mysql.jdbc.Driver
     url: jdbc:mysql://47.96.28.236:3306/sonnx-dev?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
-    user: root
-    password: zhuxiaolong13880298929
+    user: guest
+    password: 123456
     max-connections: 50
   plugin:
     trigg-history-class: org.quartz.plugins.history.LoggingJobHistoryPlugin
