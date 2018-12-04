@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wim.quartz.business.dao.TableNameMapper">
+  <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.TableName">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="order" jdbcType="INTEGER" property="order" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, table_name, description, `order`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bdc_table_name
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bdc_table_name
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wim.quartz.business.entity.TableName">
+    insert into bdc_table_name (id, type, table_name, 
+      description, `order`)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{tableName,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.TableName">
+    insert into bdc_table_name
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="tableName != null">
+        table_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="order != null">
+        `order`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="tableName != null">
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="order != null">
+        #{order,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.TableName">
+    update bdc_table_name
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="tableName != null">
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="order != null">
+        `order` = #{order,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.TableName">
+    update bdc_table_name
+    set type = #{type,jdbcType=INTEGER},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      `order` = #{order,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
