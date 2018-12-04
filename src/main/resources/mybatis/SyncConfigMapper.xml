@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wim.quartz.business.dao.SyncConfigMapper">
+    <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.SyncConfig">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="biz_id" jdbcType="BIGINT" property="bizId"/>
+        <result column="net_unit_id" jdbcType="BIGINT" property="netUnitId"/>
+        <result column="file_format" jdbcType="VARCHAR" property="fileFormat"/>
+        <result column="new_switch" jdbcType="INTEGER" property="newSwitch"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <association property="bizType" column="biz_id"
+                     select="com.wim.quartz.business.dao.BizTypeMapper.selectByPrimaryKey"/>
+        <association property="netUnit" column="net_unit_id"
+                     select="com.wim.quartz.business.dao.NetUnitMapper.findByNetUnitId"/>
+    </resultMap>
+    <resultMap id="AllResultMap" type="com.wim.quartz.business.entity.SyncConfig" extends="BaseResultMap">
+        <collection property="syncFieldList" column="id"
+                    select="com.wim.quartz.business.dao.SyncFieldMapper.findListBySyncId"/>
+        <collection property="syncFileErrorList" column="id"
+                    select="com.wim.quartz.business.dao.SyncFileErrorMapper.findListBySyncId"/>
+        <collection property="syncRecordErrorList" column="id"
+                    select="com.wim.quartz.business.dao.SyncRecordErrorMapper.findListBySyncId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id,biz_id, net_unit_id, file_format,new_switch,description
+  </sql>
+    <insert id="insert" parameterType="com.wim.quartz.business.entity.SyncConfig">
+    insert into bdc_sync_config (biz_id, net_unit_id,file_format,new_switch, description)
+    values (#{bizId,jdbcType=BIGINT}, #{netUnitId,jdbcType=BIGINT}, #{fileFormat,jdbcType=VARCHAR}, #{newSwitch,jdbcType=INTEGER},  #{description,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.SyncConfig">
+        insert into bdc_sync_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bizId != null">
+                biz_id,
+            </if>
+            <if test="netUnitId != null">
+                net_unit_id,
+            </if>
+            <if test="fileFormat != null">
+                file_format,
+            </if>
+            <if test="newSwitch != null">
+                new_switch,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bizId != null">
+                #{bizId,jdbcType=BIGINT},
+            </if>
+            <if test="netUnitId != null">
+                #{netUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="fileFormat != null">
+                #{fileFormat,jdbcType=VARCHAR},
+            </if>
+            <if test="newSwitch != null">
+                #{new_switch,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="findListByBizId" resultMap="AllResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_sync_config where biz_id=#{bizId}
+    </select>
+</mapper>

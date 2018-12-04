@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wim.quartz.business.dao.BizTypeMapper">
     <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
-        <id column="biz_type" jdbcType="VARCHAR" property="bizType"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="biz_type" jdbcType="VARCHAR" property="bizType"/>
         <result column="biz_type_code" jdbcType="VARCHAR" property="bizTypeCode"/>
         <result column="biz_type_name" jdbcType="VARCHAR" property="bizTypeName"/>
         <result column="file_regex" jdbcType="VARCHAR" property="fileRegex"/>
@@ -14,41 +15,43 @@
         <result column="source_from" jdbcType="INTEGER" property="sourceFrom" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
         <result column="move_formal_mode" jdbcType="INTEGER" property="moveFormalMode" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
         <result column="move_formal_of_net_unit_code" jdbcType="VARCHAR" property="moveFormalOfNetUnitCode"/>
+        <result column="order" jdbcType="INTEGER" property="order"/>
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
-        <collection property="fieldList" column="biz_type" select="com.wim.quartz.business.dao.BizTypeFieldMapper.findFieldListByBizType"></collection>
-        <collection property="syncNetUnitConfigList" column="biz_type" select="com.wim.quartz.business.dao.SyncNetUnitConfigMapper.findListByBizType"></collection>
+        <collection property="fieldList" column="id" select="com.wim.quartz.business.dao.BizTypeFieldMapper.findFieldListByBizId"></collection>
+        <collection property="syncConfigList" column="id" select="com.wim.quartz.business.dao.SyncConfigMapper.findListByBizId"></collection>
     </resultMap>
     <sql id="Base_Column_List">
-    biz_type, biz_type_code, biz_type_name, file_regex,sync_file_pattern,reject_file_pattern,receipt_file_pattern,
-    max_records_one_file,sync_type,source_from,move_formal_mode,move_formal_of_net_unit_code
+    id,biz_type, biz_type_code, biz_type_name, file_regex,sync_file_pattern,reject_file_pattern,receipt_file_pattern,
+    max_records_one_file,sync_type,source_from,move_formal_mode,move_formal_of_net_unit_code,`order`
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from bdc_biz_type
-        where biz_type = #{bizType,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
     </select>
     <select id="selectAll" resultMap="AllResultMap">
         select
         <include refid="Base_Column_List"/>
         from bdc_biz_type
+        order by `order` asc
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from bdc_biz_type
-    where biz_type = #{bizType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.BizType">
     insert into bdc_biz_type (biz_type, biz_type_code, biz_type_name,
       file_regex, sync_file_pattern, reject_file_pattern,
       receipt_file_pattern, max_records_one_file,
       sync_type, source_from, move_formal_mode,
-      move_formal_of_net_unit_code)
+      move_formal_of_net_unit_code,`order`)
     values (#{bizType,jdbcType=VARCHAR}, #{bizTypeCode,jdbcType=VARCHAR}, #{bizTypeName,jdbcType=VARCHAR},
       #{fileRegex,jdbcType=VARCHAR}, #{syncFilePattern,jdbcType=VARCHAR}, #{rejectFilePattern,jdbcType=VARCHAR},
       #{receiptFilePattern,jdbcType=VARCHAR}, #{maxRecordsOneFile,jdbcType=INTEGER},
       #{syncType,jdbcType=INTEGER}, #{sourceFrom,jdbcType=INTEGER}, #{moveFormalMode,jdbcType=INTEGER},
-      #{moveFormalOfNetUnitCode,jdbcType=VARCHAR})
+      #{moveFormalOfNetUnitCode,jdbcType=VARCHAR},#{order,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.BizType">
         insert into bdc_biz_type
@@ -89,6 +92,9 @@
             <if test="moveFormalOfNetUnitCode != null">
                 move_formal_of_net_unit_code,
             </if>
+            <if test="order != null">
+                `order`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="bizType != null">
@@ -127,6 +133,9 @@
             <if test="moveFormalOfNetUnitCode != null">
                 #{moveFormalOfNetUnitCode,jdbcType=VARCHAR},
             </if>
+            <if test="order != null">
+                #{order,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.BizType">
@@ -142,7 +151,7 @@
                 file_regex = #{fileRegex,jdbcType=VARCHAR},
             </if>
             <if test="syncFilePattern != null">
-                sync_file_pattern = #{syncFilePattern,jdbcType=VARCHAR},
+            sync_file_pattern = #{syncFilePattern,jdbcType=VARCHAR},
             </if>
             <if test="rejectFilePattern != null">
                 reject_file_pattern = #{rejectFilePattern,jdbcType=VARCHAR},
@@ -165,8 +174,11 @@
             <if test="moveFormalOfNetUnitCode != null">
                 move_formal_of_net_unit_code = #{moveFormalOfNetUnitCode,jdbcType=VARCHAR},
             </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=INTEGER},
+            </if>
         </set>
-        where biz_type = #{bizType,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizType">
     update bdc_biz_type
@@ -180,7 +192,8 @@
       sync_type = #{syncType,jdbcType=INTEGER},
       source_from = #{sourceFrom,jdbcType=INTEGER},
       move_formal_mode = #{moveFormalMode,jdbcType=INTEGER},
-      move_formal_of_net_unit_code = #{moveFormalOfNetUnitCode,jdbcType=VARCHAR}
-    where biz_type = #{bizType,jdbcType=VARCHAR}
+      move_formal_of_net_unit_code = #{moveFormalOfNetUnitCode,jdbcType=VARCHAR},
+      `order` = #{order,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

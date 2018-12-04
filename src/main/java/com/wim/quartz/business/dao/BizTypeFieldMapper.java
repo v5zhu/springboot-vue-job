@@ -7,17 +7,17 @@ import java.util.List;
 
 @Mapper
 public interface BizTypeFieldMapper {
-    int deleteByPrimaryKey(BizTypeField key);
+    int deleteByPrimaryKey(Long key);
 
     int insert(BizTypeField record);
 
     int insertSelective(BizTypeField record);
 
-    BizTypeField selectByPrimaryKey(BizTypeField key);
+    BizTypeField selectByPrimaryKey(Long key);
 
     int updateByPrimaryKeySelective(BizTypeField record);
 
     int updateByPrimaryKey(BizTypeField record);
 
-    List<BizTypeField> findFieldListByBizType(String bizType);
+    List<BizTypeField> findFieldListByBizId(Long bizId);
 }

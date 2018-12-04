@@ -1,6 +1,8 @@
 package com.wim.quartz.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.PageInfo;
 import com.wim.quartz.JobApplication;
 import com.wim.quartz.business.entity.BizType;
@@ -34,10 +36,10 @@ public class BizTypeServiceTest {
     public void test() {
         PageInfo<BizType> page = bizTypeService.bizTypeList(1, 10);
 
-        System.out.println(JSONArray.toJSONString(page.getList()));
+        System.out.println(JSONArray.toJSONString(page.getList(), SerializerFeature.DisableCircularReferenceDetect));
 
         PageInfo<NetUnit> netPage = netUnitService.getNetUnitListForPage(1, 100);
-        System.out.println(JSONArray.toJSONString(netPage.getList()));
+        System.out.println(JSONArray.toJSONString(netPage.getList(), SerializerFeature.DisableCircularReferenceDetect));
 
 
     }

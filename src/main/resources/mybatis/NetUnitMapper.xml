@@ -2,13 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wim.quartz.business.dao.NetUnitMapper">
     <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.NetUnit">
-        <id column="net_unit_code" jdbcType="VARCHAR" property="netUnitCode"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="net_unit_code" jdbcType="VARCHAR" property="netUnitCode"/>
         <result column="net_unit_name" jdbcType="VARCHAR" property="netUnitName"/>
         <result column="center" jdbcType="INTEGER" property="center"/>
         <result column="ftp_name" jdbcType="VARCHAR" property="ftpName"/>
         <result column="ftp_description" jdbcType="VARCHAR" property="ftpDescription"/>
         <result column="protocol" jdbcType="VARCHAR" property="protocol"/>
-        <result column="ftp_style" jdbcType="INTEGER" property="ftpStyle" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="ftp_style" jdbcType="INTEGER" property="ftpStyle"
+                typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
         <result column="host" jdbcType="VARCHAR" property="host"/>
         <result column="port" jdbcType="VARCHAR" property="port"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
@@ -24,19 +26,19 @@
         <result column="remotereceivetempdir" jdbcType="VARCHAR" property="remotereceivetempdir"/>
     </resultMap>
     <sql id="Base_Column_List">
-    net_unit_code, net_unit_name,center, ftp_name, ftp_description,protocol,ftp_style, host, port, username, password,timeout,
+    id,net_unit_code, net_unit_name,center, ftp_name, ftp_description,protocol,ftp_style, host, port, username, password,timeout,
     localsenddir, localsendtempdir, remotesenddir, remotesendtempdir, localreceivedir,
     localreceivetempdir, remotereceivedir, remotereceivetempdir
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from bdc_net_unit
-        where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from bdc_net_unit
-    where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.NetUnit">
     insert into bdc_net_unit (net_unit_code, net_unit_name,center, ftp_name,
@@ -240,7 +242,7 @@
                 remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR},
             </if>
         </set>
-        where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.NetUnit">
     update bdc_net_unit
@@ -263,7 +265,7 @@
       localreceivetempdir = #{localreceivetempdir,jdbcType=VARCHAR},
       remotereceivedir = #{remotereceivedir,jdbcType=VARCHAR},
       remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR}
-    where net_unit_code = #{netUnitCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 
     <select id="findByNetUnitCode" resultMap="BaseResultMap">
@@ -275,5 +277,11 @@
         select
         <include refid="Base_Column_List"/>
         from bdc_net_unit
+        order by `order` asc
+    </select>
+    <select id="findByNetUnitId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_net_unit where id=#{netUnitId}
     </select>
 </mapper>

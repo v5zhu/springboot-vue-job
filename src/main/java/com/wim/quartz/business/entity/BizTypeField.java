@@ -14,16 +14,32 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class BizTypeField {
+public class BizTypeField extends IdEntity {
 
-    private String bizType;
+    private Long bizId;
 
     private String fieldName;
 
+    private Boolean keyword;
+
+    private Boolean auxKeyword;
+
+    private Integer fieldConstraint;
+
+    private String fieldType;
+
+    private String fieldLength;
+
     private String description;
 
-    private String convertField;
+    private String fieldValueDescription;
 
-    private List<ConvertField> convertFieldList;
+    private String defaultValue;
+
+    private String dictField;
+
+    private Integer order;
+
+    private List<FieldConvertDict> fieldConvertList;
 
 }

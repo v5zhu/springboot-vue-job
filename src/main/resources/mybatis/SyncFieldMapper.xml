@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wim.quartz.business.dao.SyncFieldMapper">
+    <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.SyncField">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="sync_id" jdbcType="BIGINT" property="syncId"/>
+        <result column="source_field" jdbcType="VARCHAR" property="sourceField"/>
+        <result column="target_field" jdbcType="VARCHAR" property="targetField"/>
+        <result column="new_interface" jdbcType="BIT" property="newInterface"/>
+        <result column="order" jdbcType="INTEGER" property="order"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, sync_id, source_field, target_field, new_interface, `order`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_sync_field
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bdc_sync_field
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wim.quartz.business.entity.SyncField">
+    insert into bdc_sync_field (id, sync_id, source_field, 
+      target_field, new_interface, `order`
+      )
+    values (#{id,jdbcType=BIGINT}, #{syncId,jdbcType=BIGINT}, #{sourceField,jdbcType=VARCHAR}, 
+      #{targetField,jdbcType=VARCHAR}, #{newInterface,jdbcType=BIT}, #{order,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.SyncField">
+        insert into bdc_sync_field
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="syncId != null">
+                sync_id,
+            </if>
+            <if test="sourceField != null">
+                source_field,
+            </if>
+            <if test="targetField != null">
+                target_field,
+            </if>
+            <if test="newInterface != null">
+                new_interface,
+            </if>
+            <if test="order != null">
+                `order`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="syncId != null">
+                #{syncId,jdbcType=BIGINT},
+            </if>
+            <if test="sourceField != null">
+                #{sourceField,jdbcType=VARCHAR},
+            </if>
+            <if test="targetField != null">
+                #{targetField,jdbcType=VARCHAR},
+            </if>
+            <if test="newInterface != null">
+                #{newInterface,jdbcType=BIT},
+            </if>
+            <if test="order != null">
+                #{order,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.SyncField">
+        update bdc_sync_field
+        <set>
+            <if test="syncId != null">
+                sync_id = #{syncId,jdbcType=BIGINT},
+            </if>
+            <if test="sourceField != null">
+                source_field = #{sourceField,jdbcType=VARCHAR},
+            </if>
+            <if test="targetField != null">
+                target_field = #{targetField,jdbcType=VARCHAR},
+            </if>
+            <if test="newInterface != null">
+                new_interface = #{newInterface,jdbcType=BIT},
+            </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.SyncField">
+    update bdc_sync_field
+    set sync_id = #{syncId,jdbcType=BIGINT},
+      source_field = #{sourceField,jdbcType=VARCHAR},
+      target_field = #{targetField,jdbcType=VARCHAR},
+      new_interface = #{newInterface,jdbcType=BIT},
+      `order` = #{order,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findListBySyncId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_sync_field where sync_id=#{syncId}
+        order by `order` asc
+    </select>
+</mapper>

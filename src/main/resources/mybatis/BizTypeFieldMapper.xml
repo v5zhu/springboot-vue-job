@@ -2,93 +2,189 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wim.quartz.business.dao.BizTypeFieldMapper">
     <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.BizTypeField">
-        <id column="biz_type" jdbcType="VARCHAR" property="bizType"/>
-        <id column="field_name" jdbcType="VARCHAR" property="fieldName"/>
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="biz_id" jdbcType="BIGINT" property="bizId"/>
+        <result column="field_name" jdbcType="VARCHAR" property="fieldName"/>
+        <result column="keyword" jdbcType="INTEGER" property="keyword"/>
+        <result column="aux_keyword" jdbcType="INTEGER" property="auxKeyword"/>
+        <result column="field_constraint" jdbcType="INTEGER" property="fieldConstraint"/>
+        <result column="field_type" jdbcType="VARCHAR" property="fieldType"/>
+        <result column="field_length" jdbcType="VARCHAR" property="fieldLength"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
-        <result column="convert_field" jdbcType="VARCHAR" property="convertField"/>
+        <result column="field_value_description" jdbcType="VARCHAR" property="fieldValueDescription"/>
+        <result column="default_value" jdbcType="VARCHAR" property="defaultValue"/>
+        <result column="dict_field" jdbcType="VARCHAR" property="dictField"/>
+        <result column="order" jdbcType="INTEGER" property="order"/>
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizTypeField">
-        <collection property="convertFieldList"  column="{bizType=biz_type,fieldName=field_name}" ofType="map" javaType="java.util.ArrayList"
-                    select="com.wim.quartz.business.dao.ConvertFieldMapper.findByBizTypeAndFieldName">
+        <collection property="fieldConvertList" column="{dictField=dict_field}" ofType="map"
+                    javaType="java.util.ArrayList"
+                    select="com.wim.quartz.business.dao.FieldConvertDictMapper.findByDictField">
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-    biz_type, field_name, description, convert_field
+    id,biz_id, field_name, keyword,aux_keyword, field_constraint, field_type, field_length, description,
+    filed_value_description, default_value, dict_field,`order`
   </sql>
     <select id="selectByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizTypeField"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from bdc_biz_type_field
-        where biz_type = #{bizType,jdbcType=VARCHAR}
-        and field_name = #{fieldName,jdbcType=VARCHAR}
+        where id=#{id}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizTypeField">
     delete from bdc_biz_type_field
-    where biz_type = #{bizType,jdbcType=VARCHAR}
-      and field_name = #{fieldName,jdbcType=VARCHAR}
+    where id=#{id}
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.BizTypeField">
-    insert into bdc_biz_type_field (biz_type, field_name, description,
-      convert_field)
-    values (#{bizType,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-      #{convertField,jdbcType=VARCHAR})
+    insert into bdc_biz_type_field (biz_id, field_name, keyword,aux_keyword,
+      field_constraint, field_type, field_length,
+      description, filed_value_description, default_value,
+      dict_field,`order`)
+    values (#{bizId,jdbcType=BIGINT}, #{fieldName,jdbcType=VARCHAR}, #{keyword,jdbcType=INTEGER},#{aux_keyword,jdbcType=INTEGER},
+      #{fieldConstraint,jdbcType=INTEGER}, #{fieldType,jdbcType=VARCHAR}, #{fieldLength,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR}, #{filedValueDescription,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR},
+      #{dictField,jdbcType=VARCHAR},#{order,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.BizTypeField">
         insert into bdc_biz_type_field
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="bizType != null">
-                biz_type,
+            <if test="bizId != null">
+                biz_id,
             </if>
             <if test="fieldName != null">
                 field_name,
             </if>
+            <if test="keyword != null">
+                keyword,
+            </if>
+            <if test="auxKeyword != null">
+                aux_keyword,
+            </if>
+            <if test="fieldConstraint != null">
+                field_constraint,
+            </if>
+            <if test="fieldType != null">
+                field_type,
+            </if>
+            <if test="fieldLength != null">
+                field_length,
+            </if>
             <if test="description != null">
                 description,
             </if>
-            <if test="convertField != null">
-                convert_field,
+            <if test="filedValueDescription != null">
+                filed_value_description,
+            </if>
+            <if test="defaultValue != null">
+                default_value,
+            </if>
+            <if test="dictField != null">
+                dict_field,
+            </if>
+            <if test="order != null">
+                `order`,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="bizType != null">
-                #{bizType,jdbcType=VARCHAR},
+            <if test="bizId != null">
+                #{bizId,jdbcType=BIGINT},
             </if>
             <if test="fieldName != null">
                 #{fieldName,jdbcType=VARCHAR},
             </if>
+            <if test="keyword != null">
+                #{keyword,jdbcType=INTEGER},
+            </if>
+            <if test="auxKeyword != null">
+                #{auxKeyword,jdbcType=INTEGER},
+            </if>
+            <if test="fieldConstraint != null">
+                #{fieldConstraint,jdbcType=INTEGER},
+            </if>
+            <if test="fieldType != null">
+                #{fieldType,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldLength != null">
+                #{fieldLength,jdbcType=VARCHAR},
+            </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
             </if>
-            <if test="convertField != null">
-                #{convertField,jdbcType=VARCHAR},
+            <if test="filedValueDescription != null">
+                #{filedValueDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultValue != null">
+                #{defaultValue,jdbcType=VARCHAR},
+            </if>
+            <if test="dictField != null">
+                #{dictField,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                #{order,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.BizTypeField">
         update bdc_biz_type_field
         <set>
+            <if test="bizId != null">
+                biz_id = #{bizId,jdbcType=BIGINT},
+            </if>
+            <if test="keyword != null">
+                keyword = #{keyword,jdbcType=INTEGER},
+            </if>
+            <if test="auxKeyword != null">
+                aux_keyword = #{auxKeyword,jdbcType=INTEGER},
+            </if>
+            <if test="fieldConstraint != null">
+                field_constraint = #{fieldConstraint,jdbcType=INTEGER},
+            </if>
+            <if test="fieldType != null">
+                field_type = #{fieldType,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldLength != null">
+                field_length = #{fieldLength,jdbcType=VARCHAR},
+            </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
             </if>
-            <if test="convertField != null">
-                convert_field = #{convertField,jdbcType=VARCHAR},
+            <if test="filedValueDescription != null">
+                filed_value_description = #{filedValueDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultValue != null">
+                default_value = #{defaultValue,jdbcType=VARCHAR},
+            </if>
+            <if test="dictField != null">
+                dict_field = #{dictField,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=VARCHAR},
             </if>
         </set>
-        where biz_type = #{bizType,jdbcType=VARCHAR}
-        and field_name = #{fieldName,jdbcType=VARCHAR}
+        where id=#{id}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.BizTypeField">
     update bdc_biz_type_field
-    set description = #{description,jdbcType=VARCHAR},
-      convert_field = #{convertField,jdbcType=VARCHAR}
-    where biz_type = #{bizType,jdbcType=VARCHAR}
-      and field_name = #{fieldName,jdbcType=VARCHAR}
+    set biz_id = #{bizId,jdbcType=BIGINT},
+      keyword = #{keyword,jdbcType=INTEGER},
+      aux_keyword = #{auxKeyword,jdbcType=INTEGER},
+      field_constraint = #{fieldConstraint,jdbcType=INTEGER},
+      field_type = #{fieldType,jdbcType=VARCHAR},
+      field_length = #{fieldLength,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      filed_value_description = #{filedValueDescription,jdbcType=VARCHAR},
+      default_value = #{defaultValue,jdbcType=VARCHAR},
+      convert_field = #{convertField,jdbcType=VARCHAR},
+      `order` = #{order,jdbcType=VARCHAR}
+    where id=#{id}
   </update>
-    <select id="findFieldListByBizType" resultMap="AllResultMap">
+    <select id="findFieldListByBizId" resultMap="AllResultMap">
         select
         <include refid="Base_Column_List"/>
         from bdc_biz_type_field
-        where biz_type=#{bizType}
+        where biz_id=#{bizId}
+        order by `order` asc
     </select>
 </mapper>

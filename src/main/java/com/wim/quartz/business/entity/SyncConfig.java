@@ -2,10 +2,7 @@ package com.wim.quartz.business.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,24 +14,27 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class SyncNetUnitConfig {
+public class SyncConfig extends IdEntity {
 
-    private String bizType;
+    private Long bizId;
 
-    private String netUnitCode;
-
-    private String netUnitName;
-
-    private String netUnitFtpName;
+    private Long netUnitId;
 
     private String fileFormat;
 
-    private String syncFields;
+    private Boolean newSwitch;
 
     private String description;
 
     // 关联对象
 
+    private BizType bizType;
+
     private NetUnit netUnit;
 
+    private List<SyncField> syncFieldList;
+
+    private List<SyncFileError> syncFileErrorList;
+
+    private List<SyncRecordError> syncRecordErrorList;
 }

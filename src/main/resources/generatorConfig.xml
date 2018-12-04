@@ -32,15 +32,40 @@
         </javaClientGenerator>
         <!--生成对应表及类名-->
 
-        <table tableName="bdc_sync_net_unit_config" domainObjectName="SyncNetUnitConfig" enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-        </table>
+
         <table tableName="bdc_biz_type" domainObjectName="BizType" enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
         </table>
+        <table tableName="bdc_biz_type_field" domainObjectName="BizTypeField" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="bdc_error_code_dict" domainObjectName="ErrorCodeDict" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="bdc_field_convert_dict" domainObjectName="FieldConvertDict" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
         <table tableName="bdc_net_unit" domainObjectName="NetUnit" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="bdc_sync_config" domainObjectName="SyncConfig" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="bdc_sync_field" domainObjectName="SyncField" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="bdc_sync_file_error" domainObjectName="SyncFileError" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="bdc_sync_record_error" domainObjectName="SyncRecordError" enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
         </table>

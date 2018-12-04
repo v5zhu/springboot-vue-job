@@ -8,13 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface BizTypeMapper {
-    int deleteByPrimaryKey(String bizType);
+    int deleteByPrimaryKey(Long id);
 
     int insert(BizType record);
 
     int insertSelective(BizType record);
 
-    BizType selectByPrimaryKey(String bizType);
+    BizType selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(BizType record);
 

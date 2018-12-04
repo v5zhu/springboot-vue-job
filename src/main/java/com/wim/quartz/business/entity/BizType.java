@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class BizType {
+public class BizType extends IdEntity{
     private String bizType;
 
     private String bizTypeCode;
@@ -42,6 +42,8 @@ public class BizType {
 
     private String moveFormalOfNetUnitCode;
 
+    private Integer order;
+
     // 关联对象
     /**
      * 局数据字段列表
@@ -50,7 +52,7 @@ public class BizType {
     /**
      * 同步网元配置列表
      */
-    private List<SyncNetUnitConfig> syncNetUnitConfigList;
+    private List<SyncConfig> syncConfigList;
 }
 
 

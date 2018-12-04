@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class NetUnit {
+public class NetUnit extends IdEntity{
     private String netUnitCode;
 
     private String netUnitName;
