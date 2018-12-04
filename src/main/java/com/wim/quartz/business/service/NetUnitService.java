@@ -12,5 +12,7 @@ import com.wim.quartz.business.entity.NetUnit;
  */
 public interface NetUnitService {
 
-    PageInfo<NetUnit> getNetUnitListForPage(Integer pageNum, Integer pageSize);
+    PageInfo<NetUnit> getListForPage(Integer pageNum, Integer pageSize);
+
+    void addRecord(NetUnit record);
 }

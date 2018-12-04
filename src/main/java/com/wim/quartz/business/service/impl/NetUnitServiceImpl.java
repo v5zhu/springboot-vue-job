@@ -7,6 +7,7 @@ import com.wim.quartz.business.entity.NetUnit;
 import com.wim.quartz.business.service.NetUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,10 +25,16 @@ public class NetUnitServiceImpl implements NetUnitService {
     private NetUnitMapper netUnitMapper;
 
     @Override
-    public PageInfo<NetUnit> getNetUnitListForPage(Integer pageNum, Integer pageSize) {
+    public PageInfo<NetUnit> getListForPage(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
         List<NetUnit> netUnits = netUnitMapper.selectAllForPage();
         PageInfo<NetUnit> pageInfo = new PageInfo<NetUnit>(netUnits);
         return pageInfo;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addRecord(NetUnit record) {
+        netUnitMapper.insert(record);
     }
 }
