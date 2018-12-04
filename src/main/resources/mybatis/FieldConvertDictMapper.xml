@@ -90,5 +90,12 @@
         <include refid="Base_Column_List"/>
         from bdc_field_convert_dict
         where field_name=#{dictField}
+        order by `order` asc
+    </select>
+    <select id="selectAllForPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_field_convert_dict
+        order by `order` asc
     </select>
 </mapper>

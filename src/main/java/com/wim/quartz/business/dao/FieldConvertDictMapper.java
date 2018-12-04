@@ -23,4 +23,6 @@ public interface FieldConvertDictMapper {
     int updateByPrimaryKey(FieldConvertDict record);
 
     List<FieldConvertDict> findByDictField(@Param("params") Map params);
+
+    List<FieldConvertDict> selectAllForPage();
 }
