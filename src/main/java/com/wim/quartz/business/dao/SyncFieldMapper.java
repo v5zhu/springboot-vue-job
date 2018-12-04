@@ -20,4 +20,6 @@ public interface SyncFieldMapper {
     int updateByPrimaryKey(SyncField record);
 
     List<SyncField> findListBySyncId(Long syncId);
+
+    List<SyncField> selectAllForPage();
 }

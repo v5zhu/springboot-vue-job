@@ -110,4 +110,10 @@
         from bdc_sync_field where sync_id=#{syncId}
         order by `order` asc
     </select>
+    <select id="selectAllForPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_sync_field
+        order by `order` asc
+    </select>
 </mapper>
