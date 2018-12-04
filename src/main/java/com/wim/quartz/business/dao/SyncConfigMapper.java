@@ -13,4 +13,6 @@ public interface SyncConfigMapper {
     int insertSelective(SyncConfig record);
 
     List<SyncConfig> findListByBizId(@Param("bizId") Long bizId);
+
+    List<SyncConfig> selectAllForPage();
 }

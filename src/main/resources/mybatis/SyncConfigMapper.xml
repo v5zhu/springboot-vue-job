@@ -69,5 +69,12 @@
         select
         <include refid="Base_Column_List"/>
         from bdc_sync_config where biz_id=#{bizId}
+        order by `order` asc
+    </select>
+    <select id="selectAllForPage" resultMap="AllResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_sync_config
+        order by `order` asc
     </select>
 </mapper>
