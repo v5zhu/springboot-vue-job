@@ -20,4 +20,7 @@ public interface BizTypeFieldMapper {
     int updateByPrimaryKey(BizTypeField record);
 
     List<BizTypeField> findFieldListByBizId(Long bizId);
+
+    List<BizTypeField> selectAll(Long bizId);
+
 }

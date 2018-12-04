@@ -7,6 +7,7 @@ import com.wim.quartz.business.entity.ErrorCodeDict;
 import com.wim.quartz.business.service.ErrorCodeDictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,5 +31,11 @@ public class ErrorCodeDictServiceImpl implements ErrorCodeDictService {
         List<ErrorCodeDict> list = errorCodeDictMapper.selectAllForPage();
         PageInfo<ErrorCodeDict> page = new PageInfo<ErrorCodeDict>(list);
         return page;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addErrorCodeDict(ErrorCodeDict codeDict) {
+        errorCodeDictMapper.insert(codeDict);
     }
 }

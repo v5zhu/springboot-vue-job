@@ -187,4 +187,15 @@
         where biz_id=#{bizId}
         order by `order` asc
     </select>
+    <select id="selectAll" resultMap="AllResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bdc_biz_type_field
+        <where>
+            <if test="bizId!=null">
+                biz_id=#{bizId}
+            </if>
+        </where>
+        order by `order` asc
+    </select>
 </mapper>

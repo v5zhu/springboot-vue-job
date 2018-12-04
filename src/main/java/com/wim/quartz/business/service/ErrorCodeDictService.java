@@ -13,4 +13,6 @@ import com.wim.quartz.business.entity.ErrorCodeDict;
 public interface ErrorCodeDictService {
 
     PageInfo<ErrorCodeDict> getErrorCodeDictListForPage(Integer pageNum, Integer pageSize);
+
+    void addErrorCodeDict(ErrorCodeDict codeDict);
 }
