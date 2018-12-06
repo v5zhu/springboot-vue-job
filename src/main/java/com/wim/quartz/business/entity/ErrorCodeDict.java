@@ -1,5 +1,6 @@
 package com.wim.quartz.business.entity;
 
+import com.wim.quartz.business.enumeration.ErrorCodeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ public class ErrorCodeDict {
 
     private String name;
 
-    private String type;
+    private ErrorCodeEnum type;
 
     private String defaultValue;
 

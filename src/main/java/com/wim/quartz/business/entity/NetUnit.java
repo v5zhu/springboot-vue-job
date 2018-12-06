@@ -1,5 +1,6 @@
 package com.wim.quartz.business.entity;
 
+import com.wim.quartz.business.enumeration.FtpProtocolEnum;
 import com.wim.quartz.business.enumeration.FtpStyleEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class NetUnit extends IdEntity{
+public class NetUnit extends IdEntity {
     private String netUnitCode;
 
     private String netUnitName;
@@ -24,7 +25,7 @@ public class NetUnit extends IdEntity{
 
     private String ftpDescription;
 
-    private String protocol;
+    private FtpProtocolEnum protocol;
 
     private FtpStyleEnum ftpStyle;
 
@@ -53,5 +54,7 @@ public class NetUnit extends IdEntity{
     private String remotereceivedir;
 
     private String remotereceivetempdir;
+
+    private Integer order;
 
 }

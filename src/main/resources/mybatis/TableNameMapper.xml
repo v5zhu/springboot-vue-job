@@ -3,13 +3,15 @@
 <mapper namespace="com.wim.quartz.business.dao.TableNameMapper">
     <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.TableName">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="biz_id" jdbcType="BIGINT" property="bizId"/>
+        <result column="type" jdbcType="VARCHAR" property="type" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
         <result column="table_name" jdbcType="VARCHAR" property="tableName"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="order" jdbcType="INTEGER" property="order"/>
+        <association property="bizType" column="biz_id" select="com.wim.quartz.business.dao.BizTypeMapper.selectByPrimaryKey"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, type, table_name, description, `order`
+    id, biz_id,type, table_name, description, `order`
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -22,9 +24,9 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="com.wim.quartz.business.entity.TableName">
-    insert into bdc_table_name (id, type, table_name, 
+    insert into bdc_table_name (id, biz_id,type, table_name,
       description, `order`)
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{tableName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT},#{bizId,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR},
       #{description,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.TableName">
@@ -35,6 +37,9 @@
             </if>
             <if test="type != null">
                 type,
+            </if>
+            <if test="bizId != null">
+                biz_id,
             </if>
             <if test="tableName != null">
                 table_name,
@@ -50,8 +55,11 @@
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
+            <if test="bizId != null">
+                #{bizId,jdbcType=BIGINT},
+            </if>
             <if test="type != null">
-                #{type,jdbcType=INTEGER},
+                #{type,jdbcType=VARCHAR},
             </if>
             <if test="tableName != null">
                 #{tableName,jdbcType=VARCHAR},
@@ -67,8 +75,11 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.wim.quartz.business.entity.TableName">
         update bdc_table_name
         <set>
+            <if test="bizId != null">
+                biz_id = #{bizId,jdbcType=BIGINT},
+            </if>
             <if test="type != null">
-                type = #{type,jdbcType=INTEGER},
+                type = #{type,jdbcType=VARCHAR},
             </if>
             <if test="tableName != null">
                 table_name = #{tableName,jdbcType=VARCHAR},
@@ -84,7 +95,8 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.wim.quartz.business.entity.TableName">
     update bdc_table_name
-    set type = #{type,jdbcType=INTEGER},
+    set type = #{type,jdbcType=VARCHAR},
+      biz_id = #{bizId,jdbcType=BIGINT},
       table_name = #{tableName,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       `order` = #{order,jdbcType=INTEGER}
@@ -94,7 +106,7 @@
         select
         <include refid="Base_Column_List"/>
         from bdc_table_name
-        order by `order` asc
+        order by biz_id,`order` asc
     </select>
 
 </mapper>

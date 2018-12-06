@@ -8,8 +8,8 @@
         <result column="center" jdbcType="INTEGER" property="center"/>
         <result column="ftp_name" jdbcType="VARCHAR" property="ftpName"/>
         <result column="ftp_description" jdbcType="VARCHAR" property="ftpDescription"/>
-        <result column="protocol" jdbcType="VARCHAR" property="protocol"/>
-        <result column="ftp_style" jdbcType="INTEGER" property="ftpStyle"
+        <result column="protocol" jdbcType="VARCHAR" property="protocol" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="ftp_style" jdbcType="VARCHAR" property="ftpStyle"
                 typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
         <result column="host" jdbcType="VARCHAR" property="host"/>
         <result column="port" jdbcType="VARCHAR" property="port"/>
@@ -24,11 +24,12 @@
         <result column="localreceivetempdir" jdbcType="VARCHAR" property="localreceivetempdir"/>
         <result column="remotereceivedir" jdbcType="VARCHAR" property="remotereceivedir"/>
         <result column="remotereceivetempdir" jdbcType="VARCHAR" property="remotereceivetempdir"/>
+        <result column="order" jdbcType="INTEGER" property="order"/>
     </resultMap>
     <sql id="Base_Column_List">
     id,net_unit_code, net_unit_name,center, ftp_name, ftp_description,protocol,ftp_style, host, port, username, password,timeout,
     localsenddir, localsendtempdir, remotesenddir, remotesendtempdir, localreceivedir,
-    localreceivetempdir, remotereceivedir, remotereceivetempdir
+    localreceivetempdir, remotereceivedir, remotereceivetempdir,`order`
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -46,13 +47,13 @@
       username, password, timeout,localsenddir,
       localsendtempdir, remotesenddir, remotesendtempdir,
       localreceivedir, localreceivetempdir, remotereceivedir,
-      remotereceivetempdir)
+      remotereceivetempdir,`order`)
     values (#{netUnitCode,jdbcType=VARCHAR}, #{netUnitName,jdbcType=VARCHAR},#{center,jdbcType=INTEGER}, #{ftpName,jdbcType=VARCHAR},
       #{ftpDescription,jdbcType=VARCHAR},#{protocol,jdbcType=VARCHAR},#{ftpStyle,jdbcType=INTEGER}, #{host,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR},
       #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{timeout,jdbcType=INTEGER}, #{localsenddir,jdbcType=VARCHAR},
       #{localsendtempdir,jdbcType=VARCHAR}, #{remotesenddir,jdbcType=VARCHAR}, #{remotesendtempdir,jdbcType=VARCHAR},
       #{localreceivedir,jdbcType=VARCHAR}, #{localreceivetempdir,jdbcType=VARCHAR}, #{remotereceivedir,jdbcType=VARCHAR},
-      #{remotereceivetempdir,jdbcType=VARCHAR})
+      #{remotereceivetempdir,jdbcType=VARCHAR} ,#{order,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.wim.quartz.business.entity.NetUnit">
         insert into bdc_net_unit
@@ -117,6 +118,9 @@
             <if test="remotereceivetempdir != null">
                 remotereceivetempdir,
             </if>
+            <if test="order != null">
+                order,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="netUnitCode != null">
@@ -178,6 +182,9 @@
             </if>
             <if test="remotereceivetempdir != null">
                 #{remotereceivetempdir,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                #{order,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -241,6 +248,9 @@
             <if test="remotereceivetempdir != null">
                 remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR},
             </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -264,7 +274,8 @@
       localreceivedir = #{localreceivedir,jdbcType=VARCHAR},
       localreceivetempdir = #{localreceivetempdir,jdbcType=VARCHAR},
       remotereceivedir = #{remotereceivedir,jdbcType=VARCHAR},
-      remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR}
+      remotereceivetempdir = #{remotereceivetempdir,jdbcType=VARCHAR},
+      `order` = #{order,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 

@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author cnlm.me@qq.com
  * @date 2017/7/22
@@ -25,7 +28,7 @@ public class BizTypeController extends BaseController {
     @ApiOperation(value = "局数据列表", notes = "获取数据库所有局数据列表")
     @GetMapping("biz_type_list.ajax")
     @ResponseBody
-    public ResponseEntity bizTypeList(@RequestParam(value = "bizType") String bizType,
+    public ResponseEntity bizTypeList(@RequestParam(value = "bizType", required = false) String bizType,
                                       @RequestParam(value = "pageNum") int pageNum,
                                       @RequestParam(value = "pageSize") int pageSize) {
         PageInfo<BizType> pageInfo = bizTypeService.bizTypeList(pageNum, pageSize);
@@ -39,6 +42,14 @@ public class BizTypeController extends BaseController {
     public ResponseEntity addBizType(@RequestBody BizType bizType) {
         bizTypeService.addNewBizType(bizType);
         return new ResponseEntity(null, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "局数据下拉框列表", notes = "获取数据库所有局数据下拉框列表")
+    @GetMapping("biz_type_dropdown.ajax")
+    @ResponseBody
+    public ResponseEntity dropdown() {
+        List<Map> list = bizTypeService.dropdown();
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 
 }

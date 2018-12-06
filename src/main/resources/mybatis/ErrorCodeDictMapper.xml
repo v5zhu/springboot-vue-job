@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.wim.quartz.business.entity.ErrorCodeDict">
         <id column="code" jdbcType="VARCHAR" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="type" jdbcType="VARCHAR" property="type" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
         <result column="default_value" jdbcType="VARCHAR" property="defaultValue"/>
         <result column="order" jdbcType="INTEGER" property="order"/>
     </resultMap>

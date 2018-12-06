@@ -5,6 +5,7 @@ import com.wim.quartz.business.entity.BizType;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BizTypeMapper {
@@ -22,4 +23,5 @@ public interface BizTypeMapper {
 
     List<BizType> selectAll();
 
+    List<Map> dropdown();
 }

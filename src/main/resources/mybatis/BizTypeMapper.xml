@@ -11,15 +11,20 @@
         <result column="reject_file_pattern" jdbcType="VARCHAR" property="rejectFilePattern"/>
         <result column="receipt_file_pattern" jdbcType="VARCHAR" property="receiptFilePattern"/>
         <result column="max_records_one_file" jdbcType="INTEGER" property="maxRecordsOneFile"/>
-        <result column="sync_type" jdbcType="INTEGER" property="syncType" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
-        <result column="source_from" jdbcType="INTEGER" property="sourceFrom" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
-        <result column="move_formal_mode" jdbcType="INTEGER" property="moveFormalMode" typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="sync_type" jdbcType="INTEGER" property="syncType"
+                typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="source_from" jdbcType="INTEGER" property="sourceFrom"
+                typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
+        <result column="move_formal_mode" jdbcType="INTEGER" property="moveFormalMode"
+                typeHandler="com.wim.quartz.component.handler.EnumTypeHandler"/>
         <result column="move_formal_of_net_unit_code" jdbcType="VARCHAR" property="moveFormalOfNetUnitCode"/>
         <result column="order" jdbcType="INTEGER" property="order"/>
     </resultMap>
     <resultMap id="AllResultMap" extends="BaseResultMap" type="com.wim.quartz.business.entity.BizType">
-        <collection property="fieldList" column="id" select="com.wim.quartz.business.dao.TableFieldMapper.findFieldListByBizId"></collection>
-        <collection property="syncConfigList" column="id" select="com.wim.quartz.business.dao.SyncConfigMapper.findListByBizId"></collection>
+        <collection property="fieldList" column="id"
+                    select="com.wim.quartz.business.dao.TableFieldMapper.findFieldListByBizId"></collection>
+        <collection property="syncConfigList" column="id"
+                    select="com.wim.quartz.business.dao.SyncConfigMapper.findListByBizId"></collection>
     </resultMap>
     <sql id="Base_Column_List">
     id,biz_type, biz_type_code, biz_type_name, file_regex,sync_file_pattern,reject_file_pattern,receipt_file_pattern,
@@ -151,7 +156,7 @@
                 file_regex = #{fileRegex,jdbcType=VARCHAR},
             </if>
             <if test="syncFilePattern != null">
-            sync_file_pattern = #{syncFilePattern,jdbcType=VARCHAR},
+                sync_file_pattern = #{syncFilePattern,jdbcType=VARCHAR},
             </if>
             <if test="rejectFilePattern != null">
                 reject_file_pattern = #{rejectFilePattern,jdbcType=VARCHAR},
@@ -196,4 +201,12 @@
       `order` = #{order,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="dropdown" resultType="map">
+        select
+          id as value,
+          biz_type_name as label
+        from bdc_biz_type
+        order by `order` asc
+    </select>
+
 </mapper>

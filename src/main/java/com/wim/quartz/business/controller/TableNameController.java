@@ -25,7 +25,7 @@ public class TableNameController extends BaseController {
     @ApiOperation(value = "局数据数据库表列表", notes = "获取局数据数据库表列表")
     @GetMapping("table_name_list.ajax")
     @ResponseBody
-    public ResponseEntity getListForPage(@RequestParam(value = "bizId") Long bizId,
+    public ResponseEntity getListForPage(@RequestParam(value = "bizId",required = false) Long bizId,
                                          @RequestParam(value = "pageNum") int pageNum,
                                          @RequestParam(value = "pageSize") int pageSize) {
         PageInfo<TableName> pageInfo = tableNameService.getListForPage(pageNum, pageSize);

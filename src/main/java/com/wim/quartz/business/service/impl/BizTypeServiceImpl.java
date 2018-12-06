@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhuxiaolong
@@ -37,5 +38,11 @@ public class BizTypeServiceImpl implements BizTypeService {
         List<BizType> bizTypes = bizTypeMapper.selectAll();
         PageInfo<BizType> pageInfo = new PageInfo(bizTypes);
         return pageInfo;
+    }
+
+    @Override
+    public List<Map> dropdown() {
+        List<Map> list = bizTypeMapper.dropdown();
+        return list;
     }
 }
